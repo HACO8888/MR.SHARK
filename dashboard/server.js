@@ -41,8 +41,9 @@ module.exports = async function (client) {
 	app.use(passport.initialize());
   app.use(passport.session());
 	app.locals.domain = "https://shark.haco.tw".split("//")[1];
-	app.engine("html", ejs.renderFile);
-	app.set("view engine", "html");
+	app.engine("ejs", ejs.renderFile);
+	app.set("view engine", "ejs");
+	app.set('views', path.join(__dirname, 'views'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
     extended: true
