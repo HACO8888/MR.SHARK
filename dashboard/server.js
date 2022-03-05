@@ -107,10 +107,10 @@ module.exports = async function (client) {
 	  res.redirect('https://discord.gg/RtsckgRjqJ')
 	})
 	app.get("/invite", (req,res) => {
-	  res.redirect('https://discord.com/api/oauth2/authorize?client_id=940285138393239573&permissions=8&scope=bot%20applications.commands')
+	  res.redirect('https://discord.com/api/oauth2/authorize?client_id=949772996216750171&permissions=8&scope=bot%20applications.commands')
 	})
 	app.get("/addbot", (req,res) => {
-	  res.redirect('https://discord.com/api/oauth2/authorize?client_id=940285138393239573&permissions=8&scope=bot%20applications.commands')
+	  res.redirect('https://discord.com/api/oauth2/authorize?client_id=949772996216750171&permissions=8&scope=bot%20applications.commands')
 	})
 	app.get("/", (req, res) => {
 	  let image = client.user.avatarURL({ format: "png", dynamic: true, size: 64 })
