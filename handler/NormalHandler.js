@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 module.exports = async (client) => {
-	mongoose.connect(client.config.mongo_url, {
+	mongoose.connect(process.env['DB'], {
 	  useNewUrlParser: true,
 	  useUnifiedTopology: true},(err) => {
 	  if (err) return console.error(err);
