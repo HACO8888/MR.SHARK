@@ -1,0 +1,13 @@
+const Discord = require("discord.js");
+const url = require("url");
+const path = require("path");
+let uniqid = require('uniqid');
+const cooldownNickname = new Set();
+const express = require("express");
+const passport = require("passport");
+const jsonconfig = require('../config.json');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const Strategy = require("passport-discord").Strategy;
+const config = require("../config");
+const ejs = require("ejs");
