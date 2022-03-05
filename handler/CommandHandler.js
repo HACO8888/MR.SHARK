@@ -35,10 +35,10 @@ module.exports = async function loadCommands(client) {
     };
 
     
-    const cmd = client.application?.commands.cache.find((c) => c.name === command.name);
-    if (!cmd) {
-      await client.application?.commands.create(data);
-    }
+    // const cmd = client.application?.commands.cache.find((c) => c.name === command.name);
+    // if (!cmd) {
+    //   await client.application?.commands.create(data);
+    // }
 
 
     client.logger.debug(`CMD DEBUG`, `Loaded ${command.name}.js`);

@@ -22,8 +22,8 @@ module.exports = async function (client) {
   passport.deserializeUser((obj, done) => done(null, obj));
 
 	passport.use(new Strategy({
-    clientID: "940285138393239573",
-    clientSecret: "z5kflqHT_-IvEvj8pks07YfPCnFsidWA",
+    clientID: "949772996216750171",
+    clientSecret: "1Zg56GDk_J0-gXR2ZmAHeUXCg_PA3LEN",
     callbackURL: `https://shark.haco.tw/callback`,
     scope: ["identify", "email", "connections", "guilds", "guilds.join"]
   },

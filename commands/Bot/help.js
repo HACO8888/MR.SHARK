@@ -12,7 +12,7 @@ module.exports = {
         .setLabel("邀請我到伺服器")
         .setStyle("LINK")
         .setURL(
-          "https://discord.com/api/oauth2/authorize?client_id=940285138393239573&permissions=8&scope=bot%20applications.commands"
+          "https://discord.com/api/oauth2/authorize?client_id=949772996216750171&permissions=8&scope=bot%20applications.commands"
         ),
       new client.discord.MessageButton()
         .setLabel("官方支援群組")
