@@ -58,4 +58,4 @@ require("./handler/NormalHandler")(client);
 require("./handler/EventHandler")(client);
 require("./handler/CommandHandler")(client);
 
-client.login(client.config.token);
+client.login(process.env['TOKEN']);
