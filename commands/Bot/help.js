@@ -86,7 +86,7 @@ module.exports = {
         let name = command.name;
         let description = command.description || "No descrpition provided";
         let usage = command.usage || "No usage provided";
-        let aliases = command.aliases || "No aliases provided";
+        let aliases = command.aliases || "這個指令沒有別名";
         let category = command.category || "No category provided!";
 
         let helpCmdEmbed = new client.discord.MessageEmbed()
