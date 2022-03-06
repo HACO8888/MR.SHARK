@@ -3,8 +3,8 @@ const { readdirSync } = require("fs");
 module.exports = {
   name: "help",
   aliases: ["cmd", "cmds", "command", "commands"],
-  usage: "sh!help <指令>",
-  category: "Bot",
+  usage: "sh!help [要查詢的指令]",
+  category: "一般",
   description: "幫助你聊解指令的指令!",
   run: async (client, message, args) => {
     const row = new client.discord.MessageActionRow().addComponents(
@@ -31,33 +31,20 @@ module.exports = {
         const name = `\`${filen.name}\``;
         botCommandsList.push(name);
       });
-
-      //   const utilityCommandsList = [];
-      //   readdirSync(`./commands/Utility`).forEach((file) => {
-      //     const filen = require(`../../commands/Utility/${file}`);
-      //     const name = `\`${filen.name}\``
-      //     utilityCommandsList.push(name);
-      //   });
-
       const helpEmbed = new client.discord.MessageEmbed()
         .setTitle(`${client.user.username} Prefix指令支援`)
         .setDescription(
           `嗨!**<@${message.author.id}>**,我是<@${client.user.id}>\n你可以使用 \`sh!help\` 來查看所有Prefix指令\n你也可以使用 \`/help\` 來查看所有斜槓指令\n**Prefix指令總數:** ${client.commands.size}\n**斜槓指令總數:** ${client.slashCommands.size}`
         )
         .addField(
-          "🤖 - Bot",
+          "🤖 - 一般",
           botCommandsList.map((data) => `${data}`).join(", "),
           true
         )
-        // .addField(
-        //   "🛠 - Utility Commands",
-        //   utilityCommandsList.map((data) => `${data}`).join(", "),
-        //   true
-        // )
         .setColor(client.config.embedColor)
         .setFooter({
           text: client.config.embedfooterText,
-          icon_url: client.user.avatarURL(),
+          iconURL: client.user.avatarURL(),
         });
 
       message.reply({
@@ -103,7 +90,7 @@ module.exports = {
           .setColor(client.config.embedColor)
           .setFooter({
             text: client.config.embedfooterText,
-            icon_url: client.user.avatarURL(),
+            iconURL: client.user.avatarURL(),
           });
 
         message.reply({

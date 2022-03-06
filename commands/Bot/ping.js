@@ -18,7 +18,7 @@ module.exports = {
       .setColor(client.config.client.random_color)
       .setFooter({
         text: client.config.embedfooterText,
-        icon_url: client.user.avatarURL(),
+        iconURL: client.user.avatarURL(),
       });
     msg.delete();
     await message.reply({

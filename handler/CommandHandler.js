@@ -6,6 +6,9 @@ const globPromise = promisify(glob);
 module.exports = async function loadCommands(client) {
 
 	const commandFiles1 = await globPromise(`${process.cwd()}/commands/**/*.js`);
+
+	client.logger.info("COMMANDS", `Loading ${commandFiles1.length} PrefixCommands...`)
+	
   commandFiles1.map((value) => {
     const file = require(value);
     const splitted = value.split("/");
@@ -13,6 +16,7 @@ module.exports = async function loadCommands(client) {
 
     if (file.name) {
       const properties = { directory, ...file };
+			client.logger.debug(`CMD DEBUG`, `Loaded ${file.name}.js`);
       client.commands.set(file.name, properties);
     }
   });

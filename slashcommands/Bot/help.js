@@ -114,7 +114,7 @@ module.exports = {
 
       if (!command) {
         interaction.followUp({
-          content: `找不到指令"${commandInt}"`,
+          content: `找不到指令\`${commandInt}\``,
         });
       } else {
         let command = client.slashCommands.get(commandInt.toLowerCase());
