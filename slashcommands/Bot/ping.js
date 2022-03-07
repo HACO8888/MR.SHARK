@@ -21,6 +21,6 @@ module.exports = {
         icon_url: client.user.avatarURL(),
       });
     msg.delete();
-    await interaction.followUp({ embeds: [pingEmbed] });
+    await interaction.editReply({ embeds: [pingEmbed] });
   },
 };

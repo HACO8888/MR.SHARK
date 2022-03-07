@@ -39,6 +39,13 @@ module.exports = {
         const name = `\`${filen.name}\``;
         InfoCommandsList.push(name);
       });
+
+			const DevCommandsList = [];
+      readdirSync(`./commands/Dev`).forEach((file) => {
+        const filen = require(`../../commands/Dev/${file}`);
+        const name = `\`${filen.name}\``;
+        DevCommandsList.push(name);
+      });
 			
       const helpEmbed = new client.discord.MessageEmbed()
         .setTitle(`${client.user.username} Prefix指令支援`)
@@ -53,6 +60,11 @@ module.exports = {
 				.addField(
           "📄資訊",
           InfoCommandsList.map((data) => `${data}`).join(", "),
+          false
+        )
+				.addField(
+          "🧩開發",
+          DevCommandsList.map((data) => `${data}`).join(", "),
           false
         )
         .setColor(client.config.embedColor)
