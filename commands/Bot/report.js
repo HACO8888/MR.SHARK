@@ -25,7 +25,10 @@ module.exports = {
 			const guild = client.guilds.cache.get("773205132472877090");
 			const channel = guild.channels.cache.get("949641073356058694");
 			channel.send({ embeds: [embed] });
-			message.reply(`⭕ | 回報成功 | 回報ID:\`${message.guild.id}${message.channel.id}${message.author.id}\``);
+			const guild1 = client.guilds.cache.get(client.config.LogGuildId);
+			const channel1 = guild1.channels.cache.get(client.config.ReportLogChannelId);
+			channel1.send({ embeds: [embed] });
+			message.reply(`⭕ | 回報成功 | 回報ID:\`${message.guild.id}${message.channel.id}${message.id}\``);
 			return;
 		}
 	}

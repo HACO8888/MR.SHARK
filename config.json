@@ -1,5 +1,9 @@
 {
   "prefix": "sh!",
   "botID": "949772996216750171",
-  "embedfooterText": "Copyright © 2021~2022 Shark Development.All rights reserved."
+  "embedfooterText": "Made By MR.HACO#8888",
+	"LogGuildId": "806477754681262100",
+	"CommandLogChannelId": "932928827976478741",
+	"ErrorLogChannelId": "932928978208034876",
+	"ReportLogChannelId": "932928952408887336"
 }

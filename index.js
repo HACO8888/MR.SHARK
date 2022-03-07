@@ -53,7 +53,7 @@ client.random_color = function random_color() {
 	];
 	return(color);
 };
-
+process.on("uncaughtException", console.log)
 require("./handler/NormalHandler")(client);
 require("./handler/EventHandler")(client);
 require("./handler/CommandHandler")(client);

@@ -1,9 +1,8 @@
-const wait = require("util").promisify(setTimeout);
 const { readdirSync } = require("fs");
 
 module.exports = {
   name: "help",
-  usage: "/help [指令]",
+  usage: "/help [要查詢的指令]",
   options: [
     {
       name: "指令",
@@ -15,7 +14,7 @@ module.exports = {
   category: "一般",
   description: "幫助你聊解指令的指令!",
   run: async (client, interaction) => {
-    await interaction.deferReply({ ephemeral: false }).catch(() => {});
+	await interaction.deferReply({ ephemeral: false }).catch(() => {});
     const row = new client.discord.MessageActionRow().addComponents(
       new client.discord.MessageButton()
         .setLabel("邀請我到伺服器")
@@ -27,10 +26,6 @@ module.exports = {
         .setLabel("官方支援群組")
         .setStyle("LINK")
         .setURL("https://discord.gg/RtsckgRjqJ")
-      // new client.discord.MessageButton()
-      //   .setLabel("GitHub")
-      //   .setStyle("LINK")
-      //   .setURL("https://github.com/MRHACO")
     );
 
     const commandInt = interaction.options.getString("指令");
@@ -42,27 +37,27 @@ module.exports = {
         normalCommandsList.push(name);
       });
 
-			const ModCommandsList = [];
+      const InfoCommandsList = [];
+      readdirSync(`./slashcommands/Info`).forEach((file) => {
+        const filen = require(`../../slashcommands/Info/${file}`);
+        const name = `\`${filen.name}\``;
+        InfoCommandsList.push(name);
+      });
+
+      const ModCommandsList = [];
       readdirSync(`./slashcommands/Mod`).forEach((file) => {
         const filen = require(`../../slashcommands/Mod/${file}`);
         const name = `\`${filen.name}\``;
         ModCommandsList.push(name);
       });
-			
-      // const MusicCommandsList = [];
-      // readdirSync(`./slashcommands/Music`).forEach((file) => {
-      //   const filen = require(`../../slashcommands/Music/${file}`);
-      //   const name = `\`${filen.name}\``;
-      //   MusicCommandsList.push(name);
-      // });
 
-			const MCCommandsList = [];
+      const MCCommandsList = [];
       readdirSync(`./slashcommands/MC`).forEach((file) => {
         const filen = require(`../../slashcommands/MC/${file}`);
         const name = `\`${filen.name}\``;
         MCCommandsList.push(name);
       });
-			
+
       const FiveMCommandsList = [];
       readdirSync(`./slashcommands/FiveM`).forEach((file) => {
         const filen = require(`../../slashcommands/FiveM/${file}`);
@@ -80,23 +75,23 @@ module.exports = {
           normalCommandsList.map((data) => `${data}`).join(", "),
           false
         )
-				 .addField(
+        .addField(
+          "📄資訊",
+          InfoCommandsList.map((data) => `${data}`).join(", "),
+          false
+        )
+        .addField(
           "🔧管理",
           ModCommandsList.map((data) => `${data}`).join(", "),
           false
         )
-        // .addField(
-        //   "🎵音樂",
-        //   MusicCommandsList.map((data) => `${data}`).join(", "),
-        //   true
-        // )
 
-				.addField(
+        .addField(
           "<:mc:947478763665514496>Minecraft",
-					MCCommandsList.map((data) => `${data}`).join(", "),
+          MCCommandsList.map((data) => `${data}`).join(", "),
           false
         )
-				
+
         .addField(
           "<:fivem:944632001200271380>FiveM",
           FiveMCommandsList.map((data) => `${data}`).join(", "),
@@ -108,14 +103,12 @@ module.exports = {
           icon_url: client.user.avatarURL(),
         });
 
-      interaction.followUp({ embeds: [helpEmbed], components: [row] });
+      interaction.editReply({ embeds: [helpEmbed], components: [row] });
     } else {
       const command = client.slashCommands.get(commandInt.toLowerCase());
 
       if (!command) {
-        interaction.followUp({
-          content: `找不到指令\`${commandInt}\``,
-        });
+        interaction.editReply(`找不到指令\`${commandInt}\``);
       } else {
         let command = client.slashCommands.get(commandInt.toLowerCase());
         let name = command.name;
@@ -144,7 +137,7 @@ module.exports = {
             icon_url: client.user.avatarURL(),
           });
 
-        interaction.followUp({ embeds: [helpCmdEmbed] });
+        interaction.editReply({ embeds: [helpCmdEmbed] });
       }
     }
   },

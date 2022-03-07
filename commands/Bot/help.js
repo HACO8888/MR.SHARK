@@ -25,21 +25,35 @@ module.exports = {
     );
 
     if (!args[0]) {
+			
       const botCommandsList = [];
       readdirSync(`./commands/Bot`).forEach((file) => {
         const filen = require(`../../commands/Bot/${file}`);
         const name = `\`${filen.name}\``;
         botCommandsList.push(name);
       });
+
+			const InfoCommandsList = [];
+      readdirSync(`./commands/Info`).forEach((file) => {
+        const filen = require(`../../commands/Info/${file}`);
+        const name = `\`${filen.name}\``;
+        InfoCommandsList.push(name);
+      });
+			
       const helpEmbed = new client.discord.MessageEmbed()
         .setTitle(`${client.user.username} Prefix指令支援`)
         .setDescription(
           `嗨!**<@${message.author.id}>**,我是<@${client.user.id}>\n你可以使用 \`sh!help\` 來查看所有Prefix指令\n你也可以使用 \`/help\` 來查看所有斜槓指令\n**Prefix指令總數:** ${client.commands.size}\n**斜槓指令總數:** ${client.slashCommands.size}`
         )
         .addField(
-          "🤖 - 一般",
+          "🤖一般",
           botCommandsList.map((data) => `${data}`).join(", "),
-          true
+          false
+        )
+				.addField(
+          "📄資訊",
+          InfoCommandsList.map((data) => `${data}`).join(", "),
+          false
         )
         .setColor(client.config.embedColor)
         .setFooter({
