@@ -12,7 +12,6 @@ module.exports = {
   category: "一般",
   description: "回報機器人問題或是給予建議!",
   run: async (client, interaction) => {
-		await interaction.deferReply({ ephemeral: false }).catch(() => {});
     const content = interaction.options.getString("內容");
     if (!content) {
       interaction.editReply("❌ | 回報失敗 | 原因:你沒有輸入要回報的內容");
@@ -48,7 +47,7 @@ module.exports = {
       .get(client.config.LogGuildId)
       .channels.cache.get(client.config.ReportLogChannelId)
       ?.send({ embeds: [embed] });
-    interaction.editReply(
+    interaction.reply(
       `⭕ | 回報成功 | 回報ID:\`${interaction.guild.id}${interaction.channel.id}${interaction.id}\``
     );
     return;

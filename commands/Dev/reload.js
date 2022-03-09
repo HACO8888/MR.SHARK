@@ -22,8 +22,14 @@ module.exports = {
 			  client.commands.set(file.name, properties);
 			}
 		});
-    await message.reply(`成功重新讀取所有指令`,{
-     	allowedMentions: { repliedUser: false },
-    });
+		let Embed = new client.discord.MessageEmbed()
+      .setTitle(`Reload`)
+			.setDescription(`Successfully Reload All`)
+      .setColor(client.random_color())
+      .setFooter({
+        text: client.config.embedfooterText,
+        iconURL: client.user.avatarURL(),
+      });
+    await message.reply({ embeds:[Embed]});
 	}
 }

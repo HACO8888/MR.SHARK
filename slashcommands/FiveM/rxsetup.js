@@ -39,7 +39,6 @@ module.exports = {
     },
   ],
   run: async (client, interaction) => {
-		await interaction.deferReply({ ephemeral: false }).catch(() => {});
     try {
       const discord = interaction.options.getString("discord名稱");
       const steam = interaction.options.getString("steam名稱");
@@ -52,16 +51,16 @@ module.exports = {
       if (interaction.guildId === "806477754681262100" || interaction.guildId === "929211779718983690") {
         if (interaction.channelId === "931494593596358696" || interaction.channelId === "931502169717342269") {
 					if (!discord){
-						await interaction.editReply({ content: `❌ | 申請失敗 | 失敗類別:填寫問題 | 原因:您沒有輸入Discord名稱`, ephemeral: false });
+						await interaction.reply({ content: `❌ | 申請失敗 | 失敗類別:填寫問題 | 原因:您沒有輸入Discord名稱`, ephemeral: false });
 						return;
 					} else if (!steam){
-						await interaction.editReply({ content: `❌ | 申請失敗 | 失敗類別:填寫問題 | 原因:您沒有輸入Steam名稱`, ephemeral: false });
+						await interaction.reply({ content: `❌ | 申請失敗 | 失敗類別:填寫問題 | 原因:您沒有輸入Steam名稱`, ephemeral: false });
 						return;
 					} else if (!steamurl){
-						await interaction.editReply({ content: `❌ | 申請失敗 | 失敗類別:填寫問題 | 原因:您沒有輸入Steam網址`, ephemeral: false });
+						await interaction.reply({ content: `❌ | 申請失敗 | 失敗類別:填寫問題 | 原因:您沒有輸入Steam網址`, ephemeral: false });
 						return;
 					} else if (!age){
-						await interaction.editReply({ content: `❌ | 申請失敗 | 失敗類別:填寫問題 | 原因:您沒有輸入年齡`, ephemeral: false });
+						await interaction.reply({ content: `❌ | 申請失敗 | 失敗類別:填寫問題 | 原因:您沒有輸入年齡`, ephemeral: false });
 						return;
 					}
 					
@@ -103,21 +102,21 @@ module.exports = {
 					}
 
 						
-					await interaction.editReply({
+					await interaction.reply({
             content: `⭕ | 申請成功 | 請靜待審核，不要煩管理員喔!`,
             ephemeral: false,
           });
 					
 					return;
         } else {
-          await interaction.editReply({
+          await interaction.reply({
             content: `❌ | 申請失敗 | 失敗類別:權限問題 | 原因:此頻道不支援此功能`,
             ephemeral: false,
           });
 					return;
         }
       } else {
-        await interaction.editReply({
+        await interaction.reply({
           content: `❌ | 申請失敗 | 失敗類別:權限問題 | 原因:此伺服器不支援此功能`,
           ephemeral: false,
         });
@@ -125,7 +124,7 @@ module.exports = {
       }
     } catch (error) {
       console.log(error);
-      await interaction.editReply({
+      await interaction.reply({
         content: "❌ | 申請失敗 | 失敗類別:機器人出事 | 原因: " + error.message,
         ephemeral: false,
       });

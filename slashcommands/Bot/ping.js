@@ -4,9 +4,7 @@ module.exports = {
   category: "一般",
   description: "查看機器人的延遲!",
   run: async (client, interaction) => {
-    await interaction.deferReply({ ephemeral: false }).catch(() => {});
     const msg = await interaction.channel.send(`🏓 偵測中...`);
-
     const pingEmbed = new client.discord.MessageEmbed()
       .setTitle(":signal_strength: 機器人延遲")
       .addField(
@@ -21,6 +19,6 @@ module.exports = {
         icon_url: client.user.avatarURL(),
       });
     msg.delete();
-    await interaction.editReply({ embeds: [pingEmbed] });
+    await interaction.reply({ embeds: [pingEmbed] });
   },
 };

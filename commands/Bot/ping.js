@@ -15,7 +15,7 @@ module.exports = {
         true
       )
       .addField("API 延遲", `${client.ws.ping}ms`, true)
-      .setColor(client.config.client.random_color)
+      .setColor(client.random_color())
       .setFooter({
         text: client.config.embedfooterText,
         iconURL: client.user.avatarURL(),

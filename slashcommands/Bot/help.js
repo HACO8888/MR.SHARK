@@ -14,7 +14,6 @@ module.exports = {
   category: "一般",
   description: "幫助你聊解指令的指令!",
   run: async (client, interaction) => {
-	await interaction.deferReply({ ephemeral: false }).catch(() => {});
     const row = new client.discord.MessageActionRow().addComponents(
       new client.discord.MessageButton()
         .setLabel("邀請我到伺服器")
@@ -103,12 +102,14 @@ module.exports = {
           icon_url: client.user.avatarURL(),
         });
 
-      interaction.editReply({ embeds: [helpEmbed], components: [row] });
+      interaction.reply({ embeds: [helpEmbed], components: [row] });
+			return;
     } else {
       const command = client.slashCommands.get(commandInt.toLowerCase());
 
       if (!command) {
-        interaction.editReply(`找不到指令\`${commandInt}\``);
+        interaction.reply(`找不到指令\`${commandInt}\``);
+				return;
       } else {
         let command = client.slashCommands.get(commandInt.toLowerCase());
         let name = command.name;
@@ -137,7 +138,8 @@ module.exports = {
             icon_url: client.user.avatarURL(),
           });
 
-        interaction.editReply({ embeds: [helpCmdEmbed] });
+        interaction.reply({ embeds: [helpCmdEmbed] });
+				return;
       }
     }
   },

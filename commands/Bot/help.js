@@ -67,7 +67,7 @@ module.exports = {
           DevCommandsList.map((data) => `${data}`).join(", "),
           false
         )
-        .setColor(client.config.embedColor)
+        .setColor(client.random_color())
         .setFooter({
           text: client.config.embedfooterText,
           iconURL: client.user.avatarURL(),
@@ -113,7 +113,7 @@ module.exports = {
 						{ name: "指令別名", value: `${aliases}` },
             { name: "使用方法", value: " `<>` 是必填項目 `[]` 是選填項目 \n ```" + usage + "```" }
           )
-          .setColor(client.config.embedColor)
+          .setColor(client.random_color())
           .setFooter({
             text: client.config.embedfooterText,
             iconURL: client.user.avatarURL(),

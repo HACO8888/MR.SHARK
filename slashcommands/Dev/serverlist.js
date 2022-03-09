@@ -6,8 +6,7 @@ module.exports = {
   category: "開發",
   description: "機器人所在伺服器列表!",
   run: async (client, interaction) => {
-    await interaction.deferReply({ ephemeral: false }).catch(() => {});
-		if(!interaction.member.id === `536445172247167016` || !nteraction.member.id === `508964901415550976`) return interaction.editReply('You are not a Dev');  
+		if(!interaction.member.id === `536445172247167016` || !interaction.member.id === `508964901415550976`) return interaction.reply('You are not a Dev');  
     const ServerList = [];
     client.guilds.cache.forEach(guild => {
       const sname = `${guild.name}(${guild.id})`
@@ -24,7 +23,7 @@ module.exports = {
         text: client.config.embedfooterText,
         icon_url: client.user.avatarURL(),
       });
-	interaction.editReply({ embeds: [Embed]});
+	interaction.reply({ embeds: [Embed]});
 
   }
 };
