@@ -7,24 +7,12 @@ module.exports = function (client) {
   eventFiles.forEach((file) => {
     const event = require(`../${file}`);
 
-    let type = "client";
-    if (file.includes("player.")) type = "player";
-
     if (!event.execute) {
-      throw new TypeError(`[ERROR] execute function is required for events! (${file})`);
+      client.logger.error(`error`, `Execute function is required for events! (${file})`);
     }
 
     if (!event.name) {
-      throw new TypeError(`[ERROR] name is required for events! (${file})`);
-    }
-
-    
-    if (type === "player") {
-      client.player.on(event.name, event.execute.bind(null, client));
-    } else if (event.once) {
-      client.once(event.name, event.execute.bind(null, client));
-    } else {
-      client.on(event.name, event.execute.bind(null, client));
+      client.logger.error(`error`, `Name is required for events! (${file})`);
     }
 
     delete require.cache[require.resolve(`../${file}`)];

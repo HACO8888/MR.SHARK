@@ -42,7 +42,7 @@ module.exports = {
             .setColor(client.random_color())
           	.setFooter({
             	text: client.config.embedfooterText,
-            	icon_url: client.user.avatarURL(),
+            	iconURL: client.user.avatarURL(),
           	});
         message.reply({
             embeds: [Embed],
