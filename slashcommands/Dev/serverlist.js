@@ -1,8 +1,8 @@
 const { MessageActionRow, MessageSelectMenu } = require('discord.js');
 
 module.exports = {
-  name: "server-list",
-  usage: `/server-list`,
+  name: "serverlist",
+  usage: `/serverlist`,
   category: "開發",
   description: "機器人所在伺服器列表!",
   run: async (client, interaction) => {
@@ -21,7 +21,7 @@ module.exports = {
       .setTimestamp(Date.now())
       .setFooter({
         text: client.config.embedfooterText,
-        icon_url: client.user.avatarURL(),
+        iconURL: client.user.avatarURL(),
       });
 	interaction.reply({ embeds: [Embed]});
 

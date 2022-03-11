@@ -64,6 +64,13 @@ module.exports = {
         FiveMCommandsList.push(name);
       });
 
+			const DevCommandsList = [];
+      readdirSync(`./commands/Dev`).forEach((file) => {
+        const filen = require(`../../commands/Dev/${file}`);
+        const name = `\`${filen.name}\``;
+        DevCommandsList.push(name);
+      });
+
       const helpEmbed = new client.discord.MessageEmbed()
         .setTitle(`${client.user.username} 斜槓指令支援`)
         .setDescription(
@@ -96,10 +103,16 @@ module.exports = {
           FiveMCommandsList.map((data) => `${data}`).join(", "),
           false
         )
+
+				.addField(
+          "🧩開發",
+          DevCommandsList.map((data) => `${data}`).join(", "),
+          false
+        )
         .setColor(client.random_color())
         .setFooter({
           text: client.config.embedfooterText,
-          icon_url: client.user.avatarURL(),
+          iconURL: client.user.avatarURL(),
         });
 
       interaction.reply({ embeds: [helpEmbed], components: [row] });
