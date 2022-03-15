@@ -9,7 +9,7 @@ module.exports = {
 	  category: "開發",
     description: '重新讀取所有指令',
   	run: async (client, message, args) => {
-    if(!message.author.id === `536445172247167016` || !message.author.id === `508964901415550976`) return message.channel.send('You are not a Dev');     
+    if(message.author.id !== '536445172247167016' && message.author.id !== '508964901415550976') return message.reply('❌你不是開發人員');     
 		
 		client.commands.clear();
 		client.slashCommands.clear();
@@ -19,12 +19,6 @@ module.exports = {
 		const evalue = [];
 		eventFiles.forEach((file) => {
 	    const event = require(`${file}`);
-	    if (!event.execute) {
-	      client.logger.error(`error`, `Execute function is required for events! (${file})`);
-	    }
-	    if (!event.name) {
-	      client.logger.error(`error`, `Name is required for events! (${file})`);
-	    }
 			if (event.once) {
       	client.once(event.name, event.execute.bind(null, client));
 				evalue.push(event.name)

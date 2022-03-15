@@ -6,5 +6,6 @@
 	"CommandLogChannelId": "932928827976478741",
 	"ErrorLogChannelId": "932928978208034876",
 	"ReportLogChannelId": "932928952408887336",
-	"GuildLogChannelId": "932928851712028672"
+	"GuildLogChannelId": "932928851712028672",
+	"ReportFormLogChannelId": "952929380924031046"
 }

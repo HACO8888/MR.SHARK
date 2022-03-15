@@ -3,6 +3,8 @@ const { Client, Collection, Intents } = require("discord.js");
 const Logger = require("./modules/Logger");
 const Embeds = require("./modules/Embeds");
 const Util = require("./modules/Util");
+const { DiscordTogether } = require('discord-together');
+const discordModals = require('discord-modals');
 
 const client = new Client({
   intents: [
@@ -33,7 +35,10 @@ client.say = Embeds;
 client.discord = Discord;
 client.commands = new Collection();
 client.slashCommands = new Collection();
+client.players = new Discord.Collection();
 client.config = require("./config.json");
+client.discordTogether = new DiscordTogether(client);
+client.discordModals = discordModals(client);
 
 client.log = function log(args, color) {
 	if (!color) {

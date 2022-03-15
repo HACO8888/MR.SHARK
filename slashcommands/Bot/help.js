@@ -24,7 +24,11 @@ module.exports = {
       new client.discord.MessageButton()
         .setLabel("官方支援群組")
         .setStyle("LINK")
-        .setURL("https://discord.gg/RtsckgRjqJ")
+        .setURL("https://discord.gg/RtsckgRjqJ"),
+			new client.discord.MessageButton()
+				.setLabel("填寫回饋單")
+				.setCustomId(`open-report-form`)
+				.setStyle("SUCCESS")
     );
 
     const commandInt = interaction.options.getString("指令");
