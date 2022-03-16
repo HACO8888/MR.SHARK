@@ -23,7 +23,8 @@ const client = new Client({
     Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
     Intents.FLAGS.DIRECT_MESSAGE_TYPING,
   ],
-	allowedMentions: { parse: ["roles", "users"], repliedUser: false }
+	partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+	allowedMentions: { parse: ["roles", "users"], repliedUser: false },
 });
 
 module.exports = client;
