@@ -44,6 +44,13 @@ module.exports = {
         InfoCommandsList.push(name);
       });
 
+			const GameCommandsList = [];
+      readdirSync(`./commands/Game`).forEach((file) => {
+        const filen = require(`../../commands/Game/${file}`);
+        const name = `\`${filen.name}\``;
+        GameCommandsList.push(name);
+      });
+			
 			const DevCommandsList = [];
       readdirSync(`./commands/Dev`).forEach((file) => {
         const filen = require(`../../commands/Dev/${file}`);
@@ -64,6 +71,11 @@ module.exports = {
 				.addField(
           "📄資訊",
           InfoCommandsList.map((data) => `${data}`).join(", "),
+          false
+        )
+				.addField(
+          "👾遊戲",
+          GameCommandsList.map((data) => `${data}`).join(", "),
           false
         )
 				.addField(

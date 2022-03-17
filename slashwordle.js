@@ -1,4 +1,4 @@
-const { MessageAttachment, MessageEmbed } = require('discord.js');
+const { MessageAttachment } = require('discord.js');
 const fs = require('fs');
 var csv = require('jquery-csv');
 const Canvas = require('canvas');
@@ -56,7 +56,7 @@ function writeToCSVFile(newData) {
     });
 }
 
-async function LoadGame(msg, guesses, answer) {
+async function LoadGame(interaction, guesses, answer) {
     const canvas = Canvas.createCanvas(330, 397);
     const context = canvas.getContext('2d');
     const background = await Canvas.loadImage('./images/BlankImage.png');
@@ -94,10 +94,10 @@ async function LoadGame(msg, guesses, answer) {
         rowOffset += squareSize + 5;
     }
     const attachment = new MessageAttachment(canvas.toBuffer(), 'wordle.png');
-    msg.reply({ files: [attachment] });
+    interaction.reply({ files: [attachment] });
 }
 
-async function Guess(msg, guesses, newGuess, answer) {
+async function Guess(interaction, guesses, newGuess, answer) {
     const canvas = Canvas.createCanvas(330, 397);
     const context = canvas.getContext('2d');
     const background = await Canvas.loadImage('./images/BlankImage.png');
@@ -142,49 +142,50 @@ async function Guess(msg, guesses, newGuess, answer) {
         rowOffset += squareSize + 5;
     }
     const attachment = new MessageAttachment(canvas.toBuffer(), 'wordle.png');
-    msg.reply({ files: [attachment] });
+    interaction.reply({ files: [attachment] });
 }
 
-function LoadNewWordle(msg) {
+function SlashLoadNewWordle(client, interaction) {
     fs.readFile('data.csv', 'UTF-8', (err, fileContent) => {
         if (err) { console.log(err) }
         csv.toArrays(fileContent, {}, (err, data) => {
             if (err) { console.log(err) }
             if (data.length == 0) {
-                data[0] = [
-                    'data:text/csv;charset=utf-8',
-                    'data:text/csv;charset=utf-8',
-                    'data:text/csv;charset=utf-8',
-                    'data:text/csv;charset=utf-8',
-                    'data:text/csv;charset=utf-8',
-                    'data:text/csv;charset=utf-8',
-                    'data:text/csv;charset=utf-8',
-                    'data:text/csv;charset=utf-8',
-                    'data:text/csv;charset=utf-8',
-                    'data:text/csv;charset=utf-8',
-                    'data:text/csv;charset=utf-8',
-                    'data:text/csv;charset=utf-8',
-                    'data:text/csv;charset=utf-8',
-                    'data:text/csv;charset=utf-8',
-                    'data:text/csv;charset=utf-8',
-                    'user',
-                    'wordOfTheDay',
-                    'canGuess',
-                    'lastGuessDate',
-                    'guesses',
-                    'wins',
-                    'games',
-                    'hasCompletedToday',
-                    'done'
-                ];
+							data[0] = [
+									'data:text/csv;charset=utf-8',
+									'data:text/csv;charset=utf-8',
+									'data:text/csv;charset=utf-8',
+									'data:text/csv;charset=utf-8',
+									'data:text/csv;charset=utf-8',
+									'data:text/csv;charset=utf-8',
+									'data:text/csv;charset=utf-8',
+									'data:text/csv;charset=utf-8',
+									'data:text/csv;charset=utf-8',
+									'data:text/csv;charset=utf-8',
+									'data:text/csv;charset=utf-8',
+									'data:text/csv;charset=utf-8',
+									'data:text/csv;charset=utf-8',
+									'data:text/csv;charset=utf-8',
+									'data:text/csv;charset=utf-8',
+									'user',
+									'wordOfTheDay',
+									'canGuess',
+									'lastGuessDate',
+									'guesses',
+									'wins',
+									'games',
+									'hasCompletedToday',
+									'done'
+							];
             }
             for (let i = 1, len = data.length; i < len; i++) {
-                if (data[i][0] == msg.author.id) {
-                    if (data[i][9] == 'false') {
-                        if (!msg.content.includes("ISAIDSTARTANEWGAME")) {
-                            msg.reply("你已經有遊戲開始了，使用`sh!wordleguess <五字單字>`來猜單字");
-                            return;
-                        }
+                if (data[i][0] == interaction.member.id) {
+                    if (data[i][9] === 'false') {
+											const notify = new client.discord.MessageEmbed()
+											.setTitle("你已經有遊戲開始了，使用`/wordleguess <五字單字>`來猜單字")
+											.setColor(client.random_color())
+											interaction.reply({embeds: [notify]});
+											return;
                     } else {
                         data[i][1] = GetAnswer();
                         data[i][3] = GetTodaysDate();
@@ -192,19 +193,19 @@ function LoadNewWordle(msg) {
                         data[i][8] = false;
                         data[i][9] = false;
                         writeToCSVFile(data);
-                        LoadGame(msg, data[i][4], data[i][1]);
+                        LoadGame(interaction, data[i][4], data[i][1]);
                         return;
                     }
                 }
             }
-            data.push([msg.author.id, GetAnswer(), 'false', GetTodaysDate(), , 0, 0, 0, false, false]);
-            writeToCSVFile(data);
-            LoadGame(msg, "", "");
+						data.push([interaction.member.id, GetAnswer(), 'false', GetTodaysDate(), , 0, 0, 0, false, false]);
+						writeToCSVFile(data);
+						LoadGame(interaction, "", "");
         })
     })
 }
 
-function PlayWordle(msg) {
+function SlashPlayWordle(client, interaction, answer) {
     fs.readFile('data.csv', 'UTF-8', (err, fileContent) => {
         if (err) { console.log(err) }
         csv.toArrays(fileContent, {}, (err, data) => {
@@ -239,14 +240,17 @@ function PlayWordle(msg) {
             }
             for (let i = 1, len = data.length; i < len; i++) {
 
-                if (data[i][0] == msg.author.id) {
+                if (data[i][0] == interaction.member.id) {
                     if (data[i][9] == "true") {
-                        msg.reply("你還沒開始遊戲!使用指令`sh!playwordle`來開始遊戲");
+												const notify = new client.discord.MessageEmbed()
+												.setTitle("你已經有遊戲開始了，使用`/wordleguess <五字單字>`來猜單字")
+												.setColor(client.random_color())
+												interaction.reply({embeds: [notify]});
                         return;
                     }
-                    var guess = msg.content.split(" ")[1];
+                    var guess = answer;
                     if (!ValidGuess(guess)) {
-                        msg.reply("單字必須是五個字，或是正確的單字");
+                        interaction.reply("單字必須是五個字，或是正確的單字");
                         return;
                     }
                     var guesses = data[i][4].split(" ");
@@ -260,12 +264,13 @@ function PlayWordle(msg) {
                         }
                     })
                     if (ok === false) {
-                        msg.reply("單字內容必須是英文字母喔!");
+												
+                        interaction.reply("單字內容必須是英文字母喔!");
                         return;
                     }
                     data[i][4] = data[i][4] + AddSpace(data[i][4]) + guess;
                     writeToCSVFile(data);
-                    Guess(msg, guesses, guess, data[i][1]);
+                    Guess(interaction, guesses, guess, data[i][1]);
                     for (var c = 0; c < guess.length; c++) {
                         if (guess.charCodeAt(c) != data[i][1].charCodeAt(c)) {
                             if (guesses.length === 5) {
@@ -274,7 +279,10 @@ function PlayWordle(msg) {
                                 data[i][7] = parseInt(data[i][7]) + 1;
 
                                 writeToCSVFile(data);
-                                msg.reply("遊戲結束，你輸了，使用`sh!wordlestats`來看戰績吧!");
+																const notify = new client.discord.MessageEmbed()
+																.setTitle("遊戲結束，你輸了，使用`/wordlestats`來看戰績吧!")
+																.setColor(client.random_color())
+																interaction.reply({embeds: [notify]});
                             }
                             return;
                         }
@@ -284,36 +292,46 @@ function PlayWordle(msg) {
                     data[i][6] = parseInt(data[i][6]) + 1;
                     data[i][7] = parseInt(data[i][7]) + 1;
                     writeToCSVFile(data);
-                    msg.reply("恭喜你成功猜出`" + data[i][1] + "`，你只用了" + (guesses.length) + "次!使用`sh!wordlestats`來看戰績吧!")
+									
+                    interaction.reply("恭喜你成功猜出`" + data[i][1] + "`，你只用了" + (guesses.length) + "次!使用`/wordlestats`來看戰績吧!")
                     return;
                 }
             }
-            msg.reply("你的遊戲還沒開始，使用指令`sh!playwordle`來開始遊戲你")
+						const notify = new client.discord.MessageEmbed()
+						.setTitle("你的遊戲還沒開始，使用指令`sh!playwordle`來開始遊戲你")
+						.setColor(client.random_color())
+						interaction.reply({embeds: [notify]});
         })
     })
 }
-function ShowWordleStats(msg) {
+function SlashShowWordleStats(client, interaction) {
     fs.readFile('data.csv', 'UTF-8', (err, fileContent) => {
         if (err) { console.log(err) }
         csv.toArrays(fileContent, {}, (err, data) => {
             if (err) { console.log(err) }
             for (let i = 1, len = data.length; i < len; i++) {
-                if (data[i][0] == msg.author.id) {
+                if (data[i][0] == interaction.member.id) {
                     var wins = data[i][6];
                     var games = data[i][7];
                     var result = Math.round((wins / games) * 100);
-                    msg.reply("MR.SHARK Wordle玩家遊玩數據: \n遊玩次數 : " + games + "\n勝率 : " + result + "%");
+										const notify = new client.discord.MessageEmbed()
+										.setTitle("```\nMR.SHARK Wordle玩家遊玩數據: \n遊玩次數 : " + games + "\n勝率 : " + result + "%\n```")
+										.setColor(client.random_color())
+										interaction.reply({embeds: [notify]});
                     return;
                 }
             }
-            data[data.length] = [msg.author.id, '', 'false', '', '', '0', '0', '0']
-            msg.reply("MR.SHARK Wordle玩家遊玩數據: \n遊玩次數 : " + 0 + "\n勝率 : " + 0 + "%");
+            data[data.length] = [interaction.member.id, '', 'false', '', '', '0', '0', '0']
+						const notify = new client.discord.MessageEmbed()
+						.setTitle("```\nMR.SHARK Wordle玩家遊玩數據: \n遊玩次數 : " + 0 + "\n勝率 : " + 0 + "%\n```")
+						.setColor(client.random_color())
+						interaction.reply({embeds: [notify]});
             writeToCSVFile(data);
         })
     })
 }
 
-module.exports = { LoadNewWordle, PlayWordle, ShowWordleStats };
+module.exports = { SlashLoadNewWordle, SlashPlayWordle, SlashShowWordleStats };
 
 abc = [
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'

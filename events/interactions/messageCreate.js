@@ -2,13 +2,23 @@ module.exports = {
   name: "messageCreate",
   async execute(client, message) {
 
+		if (message.author.bot){
+			return;
+		}
+
+		if (!message.content.toLowerCase().startsWith(client.config.prefix)){
+			return;
+		}
+		
 		if (!message.guild){
 			message.reply("機器人目前不支援私訊使用指令")
+			return;
 		}
 		
 	  if (message.author.bot || !message.content.toLowerCase().startsWith(client.config.prefix)){
 			return;
 		}
+		
 	  const [cmd, ...args] = message.content
 	    .slice(client.config.prefix.length)
 	    .trim()

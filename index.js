@@ -59,6 +59,7 @@ client.random_color = function random_color() {
 	];
 	return(color);
 };
+
 process.on("uncaughtException", console.log)
 process.on("unhandledRejection", console.log)
 					 
