@@ -1,7 +1,7 @@
 # Security Policy
 
 ## Supported Versions
-####Node.JS Support Version
+#### Node.JS Support Version
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -12,7 +12,7 @@
 |   v13   | :x:                |
 |   v12   | :x:                |
 
-####Discord.js Support Version
+#### Discord.js Support Version
 
 | Version | Supported          |
 | ------- | ------------------ |
