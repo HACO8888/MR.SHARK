@@ -97,7 +97,7 @@ async function LoadGame(interaction, guesses, answer) {
     interaction.reply({ files: [attachment] });
 }
 
-async function Guess(interaction, guesses, newGuess, answer) {
+async function Guess(interaction, guesses, newGuess, answer, notify) {
     const canvas = Canvas.createCanvas(330, 397);
     const context = canvas.getContext('2d');
     const background = await Canvas.loadImage('./images/BlankImage.png');
@@ -142,7 +142,7 @@ async function Guess(interaction, guesses, newGuess, answer) {
         rowOffset += squareSize + 5;
     }
     const attachment = new MessageAttachment(canvas.toBuffer(), 'wordle.png');
-    interaction.reply({ files: [attachment] });
+		await interaction.reply({ embeds: [notify], files: [attachment] });
 }
 
 function SlashLoadNewWordle(client, interaction) {
@@ -239,68 +239,85 @@ function SlashPlayWordle(client, interaction, answer) {
                 ];
             }
             for (let i = 1, len = data.length; i < len; i++) {
+							if (data[i][0] == interaction.member.id) {
+								if (data[i][9] == "true") {
+									const notify = new client.discord.MessageEmbed()
+									.setTitle("你還沒開始遊戲!使用指令`/playwordle`來開始遊戲")
+									.setColor(client.random_color())
+									interaction.reply({embeds: [notify]});
+									return;
+								}
+								var done = false;
+								var guess = answer;
+								if (!ValidGuess(guess)) {
+									const notify = new client.discord.MessageEmbed()
+									.setTitle("單字必須是五個字，或是正確的單字")
+									.setColor(client.random_color())
+									interaction.reply({embeds: [notify]});
+									return;
+								}
+								var guesses = data[i][4].split(" ");
+								guess = guess.toUpperCase();
+								guessa = guess.split('');
+								var ok = true;
+								guessa.forEach((e) => {
+										if (!abc.includes(e)) {
+												ok = false;
+												return;
+										}
+								})
+								if (ok === false) {
+									const notify = new client.discord.MessageEmbed()
+									.setTitle("單字內容必須是英文字母喔!")
+									.setColor(client.random_color())
+									interaction.reply({embeds: [notify]});
+									return;
+								}
+								data[i][4] = data[i][4] + AddSpace(data[i][4]) + guess;
+								writeToCSVFile(data);
+								for (var c = 0; c < guess.length; c++) {
+										if (guess.charCodeAt(c) != data[i][1].charCodeAt(c)) {
+												if (guesses.length === 5) {
+													data[i][9] = true;
+													data[i][8] = true;
+													data[i][7] = parseInt(data[i][7]) + 1;
 
-                if (data[i][0] == interaction.member.id) {
-                    if (data[i][9] == "true") {
-												const notify = new client.discord.MessageEmbed()
-												.setTitle("你已經有遊戲開始了，使用`/wordleguess <五字單字>`來猜單字")
-												.setColor(client.random_color())
-												interaction.reply({embeds: [notify]});
-                        return;
-                    }
-                    var guess = answer;
-                    if (!ValidGuess(guess)) {
-                        interaction.reply("單字必須是五個字，或是正確的單字");
-                        return;
-                    }
-                    var guesses = data[i][4].split(" ");
-                    guess = guess.toUpperCase();
-                    guessa = guess.split('');
-                    var ok = true;
-                    guessa.forEach((e) => {
-                        if (!abc.includes(e)) {
-                            ok = false;
-                            return;
-                        }
-                    })
-                    if (ok === false) {
-												
-                        interaction.reply("單字內容必須是英文字母喔!");
-                        return;
-                    }
-                    data[i][4] = data[i][4] + AddSpace(data[i][4]) + guess;
-                    writeToCSVFile(data);
-                    Guess(interaction, guesses, guess, data[i][1]);
-                    for (var c = 0; c < guess.length; c++) {
-                        if (guess.charCodeAt(c) != data[i][1].charCodeAt(c)) {
-                            if (guesses.length === 5) {
-                                data[i][9] = true;
-                                data[i][8] = true;
-                                data[i][7] = parseInt(data[i][7]) + 1;
+													writeToCSVFile(data);
+													const notify = new client.discord.MessageEmbed()
+													.setTitle("遊戲結束，你輸了，使用`/wordlestats`來看戰績吧!")
+													.setColor(client.random_color())
+													Guess(interaction, guesses, guess, data[i][1], notify);
+													// interaction.reply({embeds: [notify]});
+													return;
+												}
+												return;
+										} else {
+											data[i][9] = true;
+											data[i][8] = true;
+											data[i][6] = parseInt(data[i][6]) + 1;
+											data[i][7] = parseInt(data[i][7]) + 1;
+											writeToCSVFile(data);
+											done = true;
+											const notify = new client.discord.MessageEmbed()
+											.setTitle("恭喜你猜出`" + data[i][1] + "`，你只用了" + (guesses.length) + "次!使用`/wordlestats`來看戰績吧!")
+											.setColor(client.random_color())
+											// interaction.followUp({embeds: [notify]});
+											Guess(interaction, guesses, guess, data[i][1], notify);
+											return;
+										}
+								}
 
-                                writeToCSVFile(data);
-																const notify = new client.discord.MessageEmbed()
-																.setTitle("遊戲結束，你輸了，使用`/wordlestats`來看戰績吧!")
-																.setColor(client.random_color())
-																interaction.reply({embeds: [notify]});
-                            }
-                            return;
-                        }
-                    }
-                    data[i][9] = true;
-                    data[i][8] = true;
-                    data[i][6] = parseInt(data[i][6]) + 1;
-                    data[i][7] = parseInt(data[i][7]) + 1;
-                    writeToCSVFile(data);
-									
-                    interaction.reply("恭喜你成功猜出`" + data[i][1] + "`，你只用了" + (guesses.length) + "次!使用`/wordlestats`來看戰績吧!")
-                    return;
-                }
+							}
             }
-						const notify = new client.discord.MessageEmbed()
-						.setTitle("你的遊戲還沒開始，使用指令`sh!playwordle`來開始遊戲你")
-						.setColor(client.random_color())
-						interaction.reply({embeds: [notify]});
+						if (done === true) {
+							return;
+						} else {
+							const notify = new client.discord.MessageEmbed()
+							.setTitle("你的遊戲還沒開始，使用指令`sh!playwordle`來開始遊戲你")
+							.setColor(client.random_color())
+							interaction.reply({embeds: [notify]});
+							return;
+						}
         })
     })
 }
@@ -315,7 +332,8 @@ function SlashShowWordleStats(client, interaction) {
                     var games = data[i][7];
                     var result = Math.round((wins / games) * 100);
 										const notify = new client.discord.MessageEmbed()
-										.setTitle("```\nMR.SHARK Wordle玩家遊玩數據: \n遊玩次數 : " + games + "\n勝率 : " + result + "%\n```")
+										.setTitle("MR.SHARK Wordle 玩家遊玩數據:")
+										.addFields({name: "遊玩次數:", value: games},{name: "勝率:", value: result + "%"})
 										.setColor(client.random_color())
 										interaction.reply({embeds: [notify]});
                     return;
@@ -323,7 +341,8 @@ function SlashShowWordleStats(client, interaction) {
             }
             data[data.length] = [interaction.member.id, '', 'false', '', '', '0', '0', '0']
 						const notify = new client.discord.MessageEmbed()
-						.setTitle("```\nMR.SHARK Wordle玩家遊玩數據: \n遊玩次數 : " + 0 + "\n勝率 : " + 0 + "%\n```")
+						.setTitle("MR.SHARK Wordle 玩家遊玩數據:")
+						.addFields({name: "遊玩次數:", value: "0"},{name: "勝率:", value: "0%"})
 						.setColor(client.random_color())
 						interaction.reply({embeds: [notify]});
             writeToCSVFile(data);
