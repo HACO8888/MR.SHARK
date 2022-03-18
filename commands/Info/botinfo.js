@@ -9,7 +9,7 @@ module.exports = {
 	aliases: ['b','bi','binfo'],
 	category: '一般',
 	description: "查看機器人的一些資訊",
-	usage: `${process.env['prefix']}botinfo`,
+	usage: `sh!botinfo`,
 	run: async (client, message) => {
 		const core = os.cpus()[0];
 		let Embed = new client.discord.MessageEmbed()

@@ -21,7 +21,7 @@ module.exports = {
 		  });
 			channel.send({ embeds: [embed] })
 			await  interaction.deferReply ( {  ephemeral : true  } ) 
-			interaction.followUp({ content: '⭕ ｜ 成功填寫回饋與回報單，您寶貴的意見會成為我們日後進步的條件!', ephemeral: true  })
+			interaction.followUp({ content: '⭕ ｜ 成功填寫回饋，您寶貴的意見會成為我們日後進步的條件!', ephemeral: true  })
   	}	  
 	}
 }

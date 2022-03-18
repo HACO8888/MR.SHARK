@@ -11,15 +11,18 @@ module.exports = {
       new client.discord.MessageButton()
         .setLabel("邀請我到伺服器")
         .setStyle("LINK")
+				.setEmoji("<:bot:950346766237175849")	
         .setURL(
           "https://discord.com/api/oauth2/authorize?client_id=949772996216750171&permissions=8&scope=bot%20applications.commands"
         ),
       new client.discord.MessageButton()
         .setLabel("官方支援群組")
         .setStyle("LINK")
+				.setEmoji("<:discord:857215040666337291>")		
         .setURL("https://discord.gg/RtsckgRjqJ"),
 			new client.discord.MessageButton()
 				.setLabel("填寫回饋單")
+				.setEmoji("📑")		
 				.setCustomId(`open-report-form`)
 				.setStyle("SUCCESS")
       // new client.discord.MessageButton()
@@ -42,6 +45,13 @@ module.exports = {
         const filen = require(`../../commands/Info/${file}`);
         const name = `\`${filen.name}\``;
         InfoCommandsList.push(name);
+      });
+
+			const MoneyCommandsList = [];
+      readdirSync(`./commands/Money`).forEach((file) => {
+        const filen = require(`../../commands/Money/${file}`);
+        const name = `\`${filen.name}\``;
+        MoneyCommandsList.push(name);
       });
 
 			const GameCommandsList = [];
@@ -71,6 +81,11 @@ module.exports = {
 				.addField(
           "📄資訊",
           InfoCommandsList.map((data) => `${data}`).join(", "),
+          false
+        )
+				.addField(
+          "🪙金流",
+          MoneyCommandsList.map((data) => `${data}`).join(", "),
           false
         )
 				.addField(

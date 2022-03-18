@@ -17,7 +17,7 @@ module.exports = {
     aliases: ['s','si','sinfo'],
     category: 'General',
     description: "查看伺服器資訊",
-    usage: `${process.env['prefix']}serverinfo`,
+    usage: `sh!serverinfo`,
     run: async (client, message) => {
         let time = message.channel.guild.createdAt.toUTCString().split(" ");
         let hor = message.channel.guild.createdAt.getUTCHours(8);

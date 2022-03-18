@@ -7,11 +7,11 @@ module.exports = {
 		if (interaction.customId === `open-report-form`) {
 			const modal = new Modal()
 			.setCustomId('modal-report-form')
-			.setTitle('MR.SHARK的回饋與回報單!')
+			.setTitle('MR.SHARK的回饋單!')
 			.addComponents([
 				new TextInputComponent()
 				.setCustomId('textinput-report1')
-				.setLabel('請輸入回饋或回報標題')
+				.setLabel('請輸入要回饋的標題')
 				.setStyle('SHORT')
 				.setMinLength(3)
 				.setMaxLength(20)
@@ -19,7 +19,7 @@ module.exports = {
 				.setRequired(true),
 				new TextInputComponent()
 				.setCustomId('textinput-report2')
-				.setLabel('請輸入您要回饋或是回報的內容')
+				.setLabel('請詳細敘述回饋內容')
 				.setStyle('LONG')
 				.setMinLength(10)
 				.setMaxLength(500)
