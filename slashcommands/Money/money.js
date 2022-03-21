@@ -5,23 +5,20 @@ module.exports = {
 	name: 'money',
 	category: 'Money',
 	description: "查看金錢",
-	category: "金流",
-	usage: `sh!money`,
-	run: async (client, message, args) => {
-
-		let user
-		if (message.mentions.members.first()) {
-			user = message.mentions.users.first()
-		} else if (args[0]) {
-			try {
-				user = message.guild.members.cache.get(args[0]).user
-			} catch (error) {
-    			message.reply(`❌無效的用戶ID`)
-				return true
-  			}
-		} else {
-			user = message.author
+	usage: `/money`,
+	options: [
+		{
+			name: "用戶",
+			description: "請選擇一個成員",
+			type: 6,
+			required: false,
 		}
+	],
+    description: "查看用戶資訊",
+    run: async (client, interaction) => {
+    	await interaction.deferReply({ ephemeral: false }).catch(() => {});
+		
+		const user = interaction.options.getUser('用戶') || interaction.author
 		var userDB = await USERS.findOne({ userID: user.id });
 		if (!userDB) {
 			const NewuserDB = new USERS({
@@ -56,7 +53,7 @@ module.exports = {
 			text: client.config.embedfooterText,
 			iconURL: client.user.avatarURL(),
 		});
-		message.reply({embeds: [embed], components: [row]})
+		interaction.followUp({embeds: [embed], components: [row]})
 		// message.reply(userDB.Money[0].toString())
 		// console.log(userDB["Money"][0])
 	},

@@ -1,5 +1,4 @@
 const { Modal, TextInputComponent, showModal } = require('discord-modals')
-const { Formatters } = require('discord.js');
 module.exports = {
   name: "interactionCreate",
   async execute(client, interaction) {

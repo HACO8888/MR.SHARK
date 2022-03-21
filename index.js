@@ -36,6 +36,7 @@ client.say = Embeds;
 client.discord = Discord;
 client.commands = new Collection();
 client.slashCommands = new Collection();
+client.民主進步黨指令 = new Collection();
 client.players = new Discord.Collection();
 client.config = require("./config.json");
 client.discordTogether = new DiscordTogether(client);

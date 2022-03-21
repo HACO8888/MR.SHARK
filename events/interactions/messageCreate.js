@@ -18,43 +18,55 @@ module.exports = {
 	  if (message.author.bot || !message.content.toLowerCase().startsWith(client.config.prefix)){
 			return;
 		}
+
+		const [cmd, ...args] = message.content
+		.slice(client.config.prefix.length)
+		.trim()
+		.split(" ");
 		
-	  const [cmd, ...args] = message.content
-	    .slice(client.config.prefix.length)
-	    .trim()
-	    .split(" ");
-	
-	  const command =
+		if (message.guild.id === "953644155140190279") {
+			
+			const command =
+	    client.民主進步黨指令.get(cmd.toLowerCase()) ||
+	    client.民主進步黨指令.find((c) => c.aliases?.includes(cmd.toLowerCase()));
+			if (!command) return message.reply("這指令不存在或是已經過期了");
+			await command.run(client, message, args);
+			
+		} else {
+			
+			const command =
 	    client.commands.get(cmd.toLowerCase()) ||
 	    client.commands.find((c) => c.aliases?.includes(cmd.toLowerCase()));
+			
 	
-	  if (!command) return message.reply("這指令不存在或是已經過期了");
-		const owner = client.users.cache.get(message.guild.ownerId);
-		const embed = new client.discord.MessageEmbed()
-	    .setTitle(`MR.SHARK Command Log`)
-			.addFields(
-        { name: "Command Name", value: `${command.name}`, inline: true },
-				{ name: "Message ID", value: `${message.id}`, inline: true },
-				{ name: "Message Url", value: `[Click To Go](https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id})`, inline: true },
-				{ name: "User Name", value: `${message.author.tag}`, inline: true },
-				{ name: "User ID", value: `${message.author.id}`, inline: true },
-				{ name: "User Mention", value: `<@${message.author.id}>`, inline: true },
-				{ name: "Guild Name", value: `${message.guild.name}`, inline: true },
-				{ name: "Guild ID", value: `${message.guild.id}`, inline: true },
-				{ name: "Guild Owner", value: `${owner.tag}`, inline: true },
-				{ name: "Channel Name", value: `${message.channel.name}`, inline: true },
-				{ name: "Channel ID", value: `${message.channel.id}`, inline: true },
-				{ name: "Channel Mention", value: `<#${message.channel.id}>`, inline: true },
-			)
-			.setColor(client.random_color())
-			.setFooter({
-				text: client.config.embedfooterText,
-				iconURL: client.user.avatarURL(),
-	  	});
-	
-		const guild = client.guilds.cache.get("806477754681262100");
-		const channel = guild.channels.cache.get("932928827976478741");
-		channel.send({ embeds: [embed] });
-	  await command.run(client, message, args);
+		  if (!command) return message.reply("這指令不存在或是已經過期了");
+			const owner = client.users.cache.get(message.guild.ownerId);
+			const embed = new client.discord.MessageEmbed()
+		    .setTitle(`MR.SHARK Command Log`)
+				.addFields(
+	        { name: "Command Name", value: `${command.name}`, inline: true },
+					{ name: "Message ID", value: `${message.id}`, inline: true },
+					{ name: "Message Url", value: `[Click To Go](https://discord.com/channels/${message.guild.id}/${message.channel.id}/${message.id})`, inline: true },
+					{ name: "User Name", value: `${message.author.tag}`, inline: true },
+					{ name: "User ID", value: `${message.author.id}`, inline: true },
+					{ name: "User Mention", value: `<@${message.author.id}>`, inline: true },
+					{ name: "Guild Name", value: `${message.guild.name}`, inline: true },
+					{ name: "Guild ID", value: `${message.guild.id}`, inline: true },
+					{ name: "Guild Owner", value: `${owner.tag}`, inline: true },
+					{ name: "Channel Name", value: `${message.channel.name}`, inline: true },
+					{ name: "Channel ID", value: `${message.channel.id}`, inline: true },
+					{ name: "Channel Mention", value: `<#${message.channel.id}>`, inline: true },
+				)
+				.setColor(client.random_color())
+				.setFooter({
+					text: client.config.embedfooterText,
+					iconURL: client.user.avatarURL(),
+		  	});
+		
+			const guild = client.guilds.cache.get("806477754681262100");
+			const channel = guild.channels.cache.get("932928827976478741");
+			channel.send({ embeds: [embed] });
+		  await command.run(client, message, args);
+		}
 	}
 }
