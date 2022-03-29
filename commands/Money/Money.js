@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const USERS = require(`${process.cwd()}/models/users`)
 
 module.exports = {

@@ -28,15 +28,15 @@ module.exports = {
 	    }
 	    delete require.cache[require.resolve(`${file}`)];
   	});
-			
+
 		const commandFiles = await globPromise(`${process.cwd()}/slashcommands/**/*.js`);
 		const cvalue = [];
 		for await (const file of commandFiles) {
+			delete require.cache[require.resolve(file)];
 	    const command = require(`${file}`);
 	    if (!command.name) {
 	      client.logger.error(`error`, `Name is required for slashCommands! (${file})`);
 	    }
-			delete require.cache[require.resolve(file)];
 			client.slashCommands.set(command.name, command);
 			cvalue.push(command.name)
   	}
@@ -44,10 +44,10 @@ module.exports = {
 	  const commandFiles1 = await globPromise(`${process.cwd()}/commands/**/*.js`);
 		const cvalue1 = [];
 		commandFiles1.map((value) => {
+			delete require.cache[require.resolve(value)];
 			const file1 = require(value);
 			const splitted1 = value.split("/");
 			const directory1 = splitted1[splitted1.length - 2];
-			delete require.cache[require.resolve(value)];
 			if (file1.name) {
 			  const properties = { directory1, ...file1 };
 			  client.commands.set(file1.name, properties);

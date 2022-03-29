@@ -34,7 +34,12 @@ module.exports = {
 				}
 			} else if (!interaction.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
 				await interaction.reply({
-					content: `❌ | 新增身分組失敗 | 您的權限不足`,
+					content: `❌ | 新增身分組失敗 | 您的權限不足，你沒有\`管理身分組\`的身分組`,
+				});
+				return;
+			} else if (!interaction.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
+				await interaction.reply({
+					content: `❌ | 新增身分組失敗 | 機器人的權限不足`,
 				});
 				return;
 			}

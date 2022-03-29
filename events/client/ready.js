@@ -50,5 +50,11 @@ module.exports = {
 			}
 		})
 		await client.application.commands.set(arrayOfSlashCommands);
+		client.guilds.cache.forEach(guild => {
+			if(guild.id === "773205132472877090") {
+				guild.commands.set([]);
+				guild.commands.set(arrayOfSlashCommands);
+			}
+		})
   }
 }

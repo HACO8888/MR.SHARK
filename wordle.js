@@ -2,6 +2,7 @@ const { MessageAttachment, MessageEmbed } = require('discord.js');
 const fs = require('fs');
 var csv = require('jquery-csv');
 const Canvas = require('canvas');
+const USERS = require(`${process.cwd()}/models/users`)
 
 function GetAnswer() {
     var j = Math.floor(Math.random() * answers.length);

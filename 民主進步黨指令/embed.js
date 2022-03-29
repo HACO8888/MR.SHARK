@@ -38,8 +38,23 @@ module.exports = {
 				text: client.config.embedfooterText,
 				iconURL: client.user.avatarURL(),
 			});
-		const msg = await message.channel.send({embeds:[Embed]});
-		msg.react('✅');
+		let Embed2 = new client.discord.MessageEmbed()
+			.setTitle(`鳴噤黨匿名回報`)//⚠️停用更新公告 🔰機器人更新通知 🔧更新啟用公告
+			//.setDescription(`✅請仔細閱讀以下匿名回報規則`)//⚠️Bot Stop And Update Announcement 🔰Bot Update Notify 🔧Bot Update And Enable Announcement
+			.setColor(client.random_color())
+			.setFooter({
+				text: client.config.embedfooterText,
+				iconURL: client.user.avatarURL(),
+			});
+		const row = new client.discord.MessageActionRow().addComponents(
+      new client.discord.MessageButton()
+			.setLabel("填寫匿名表單")
+			.setEmoji("📑")		
+			.setCustomId(`greennoname`)
+			.setStyle("SUCCESS"),
+		);
+		const msg = await message.channel.send({embeds:[Embed2], components: [row],});
+		//msg.react('✅');
 		// await message.channel.send("目前驗證人數:0人");
 	}
 }

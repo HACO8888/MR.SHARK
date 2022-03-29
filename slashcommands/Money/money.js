@@ -18,7 +18,7 @@ module.exports = {
     run: async (client, interaction) => {
     	await interaction.deferReply({ ephemeral: false }).catch(() => {});
 		
-		const user = interaction.options.getUser('用戶') || interaction.author
+		const user = interaction.options.getUser('用戶') || interaction.user
 		var userDB = await USERS.findOne({ userID: user.id });
 		if (!userDB) {
 			const NewuserDB = new USERS({

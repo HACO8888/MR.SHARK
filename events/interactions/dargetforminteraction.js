@@ -15,22 +15,22 @@ module.exports = {
 				await NewuserDB.save();
 				userDB = await USERS.findOne({ userID: interaction.member.id });
 			}
-		}
-		if (userDB.jobyet === "YUP" && interaction.member.id !== "508964901415550976") {
-			const channel = await client.channels.fetch("955180741396922429");
-      const embed = new client.discord.MessageEmbed()
-			.setTitle(`達爾重複申請公職紀錄`)
-			.setDescription(`${interaction.member.user.tag}(${interaction.member.displayName})重複申請了\n各公職高層必要時可拒絕此人任何項目申請`)
-      .setTimestamp()
-			.setColor(client.random_color())
-		  .setFooter({
-		    text: client.config.embedfooterText,
-		    iconURL: client.user.avatarURL(),
-		  });
-      channel.send({ embeds: [embed] })
-			await  interaction.deferReply ( {  ephemeral : true  } ) 
-			interaction.followUp({ content: '❌你很糟糕已經申請過職業了，此通知已被紀錄給各公職高層，你的任何申請皆可能因此不通過', ephemeral: true  })
-			return;
+			if (userDB.jobyet === "YUP" && interaction.member.id !== "508964901415550976") {
+				const channel = await client.channels.fetch("955180741396922429");
+	      const embed = new client.discord.MessageEmbed()
+				.setTitle(`達爾重複申請公職紀錄`)
+				.setDescription(`${interaction.member.user.tag}(${interaction.member.displayName})重複申請了\n各公職高層必要時可拒絕此人任何項目申請`)
+	      .setTimestamp()
+				.setColor(client.random_color())
+			  .setFooter({
+			    text: client.config.embedfooterText,
+			    iconURL: client.user.avatarURL(),
+			  });
+	      channel.send({ embeds: [embed] })
+				await  interaction.deferReply ( {  ephemeral : true  } ) 
+				interaction.followUp({ content: '❌你很糟糕已經申請過職業了，此通知已被紀錄給各公職高層，你的任何申請皆可能因此不通過', ephemeral: true  })
+				return;
+			}
 		}
 		if (interaction.customId === `open-dar-police-form`) {
 			const modalpolice = new Modal()
@@ -42,7 +42,7 @@ module.exports = {
 				.setLabel('請按照格是輸入基本資訊(缺少任何一項則不通過):')
 				.setStyle('LONG')
 				.setMinLength(35)
-				.setMaxLength(100)
+				.setMaxLength(200)
 				.setPlaceholder('Discord名稱:MR.HACO#8888\n角色名稱:MR.HACO\n聯絡電話:587-8787\n現實年齡:15\n角色年齡:30')
 				.setRequired(true),
 				new TextInputComponent()
@@ -121,8 +121,8 @@ module.exports = {
 				.setCustomId('player-playtime')
 				.setLabel('上班時間填寫(格式錯誤將不予受理):')
 				.setStyle('LONG')
-				.setMinLength(29)
-				.setMaxLength(29)
+				.setMinLength(0)
+				.setMaxLength(200)
 				.setPlaceholder('平日:17:00~21:00\n假日:14:00~21:00')
 				.setRequired(true),
 			]);
@@ -171,8 +171,8 @@ module.exports = {
 				.setCustomId('player-playtime')
 				.setLabel('上班時間填寫(格式錯誤將不予受理):')
 				.setStyle('LONG')
-				.setMinLength(29)
-				.setMaxLength(29)
+				.setMinLength(0)
+				.setMaxLength(200)
 				.setPlaceholder('平日:17:00~21:00\n假日:14:00~21:00')
 				.setRequired(true),
 			]);
@@ -221,8 +221,8 @@ module.exports = {
 				.setCustomId('player-playtime')
 				.setLabel('上班時間填寫(格式錯誤將不予受理):')
 				.setStyle('LONG')
-				.setMinLength(29)
-				.setMaxLength(29)
+				.setMinLength(0)
+				.setMaxLength(200)
 				.setPlaceholder('平日:17:00~21:00\n假日:14:00~21:00')
 				.setRequired(true),
 			]);
@@ -241,15 +241,15 @@ module.exports = {
 				.setLabel('請按照格是輸入基本資訊(缺少任何一項則不通過):')
 				.setStyle('LONG')
 				.setMinLength(35)
-				.setMaxLength(100)
+				.setMaxLength(200)
 				.setPlaceholder('Discord名稱:MR.HACO#8888\n角色名稱:MR.HACO\n聯絡電話:587-8787\n現實年齡:15\n角色年齡:30')
 				.setRequired(true),
 				new TextInputComponent()
 				.setCustomId('player-playtime')
 				.setLabel('上班時間填寫(格式錯誤將不予受理):')
 				.setStyle('LONG')
-				.setMinLength(29)
-				.setMaxLength(29)
+				.setMinLength(0)
+				.setMaxLength(200)
 				.setPlaceholder('平日:17:00~21:00\n假日:14:00~21:00')
 				.setRequired(true),
 				new TextInputComponent()
@@ -322,8 +322,8 @@ module.exports = {
 				.setCustomId('player-playtime')
 				.setLabel('上班時間填寫(格式錯誤將不予受理):')
 				.setStyle('LONG')
-				.setMinLength(29)
-				.setMaxLength(29)
+				.setMinLength(0)
+				.setMaxLength(200)
 				.setPlaceholder('平日:17:00~21:00\n假日:14:00~21:00')
 				.setRequired(true),
 			]);

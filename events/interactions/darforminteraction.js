@@ -1,20 +1,35 @@
 const { Formatters } = require('discord.js');
+const USERS = require(`${process.cwd()}/models/darjob`)
 module.exports = {
 	name: "modalSubmit",
   async execute(client, interaction) {
+		if (interaction.guildId === `747765361302044732`) {
+			var userDB = await USERS.findOne({ userID: interaction.member.id });
+			if (!userDB) {
+				const NewuserDB = new USERS({
+					userID: interaction.member.id,
+					jobyet: "NOPE",
+					whichjob: "NOPE"
+				})
+				await NewuserDB.save();
+				userDB = await USERS.findOne({ userID: interaction.member.id });
+			}
+			userDB.jobyet = "YUP";
+			userDB.save();
+		}
     const row = new client.discord.MessageActionRow().addComponents(
       new client.discord.MessageButton()
-			.setLabel("申請不通過")
+			.setLabel("申請通過")
 			.setEmoji("⭕")		
-			.setCustomId(`dar-delete-job-db-y`)
-			.setStyle("SUCCESS")
-      .setDisabled(true),
+			.setCustomId(`dar-delete-job-db-y-${interaction.member.id}`)
+			.setStyle("SUCCESS"),
+      // .setDisabled(true),
 			new client.discord.MessageButton()
 			.setLabel("申請不通過")
 			.setEmoji("❌")		
-			.setCustomId(`dar-delete-job-db-n`)
-			.setStyle("DANGER")
-      .setDisabled(true),
+			.setCustomId(`dar-delete-job-db-n-${interaction.member.id}`)
+			.setStyle("DANGER"),
+      // .setDisabled(true),
 			new client.discord.MessageButton()
 			.setLabel("填寫回饋單")
 			.setEmoji("📑")		
@@ -72,32 +87,32 @@ module.exports = {
 			channel.send({ embeds: [embed], components: [row], })
 			await  interaction.deferReply ( {  ephemeral : true  } ) 
 			interaction.followUp({ content: '⭕ ｜ 成功申請醫護局 ｜ 請等待後續通知!', ephemeral: true  })
-		}	else if (interaction.customId === 'modal-dar-usedcar-form') {
-			const player_info1 = interaction.getTextInputValue('player-info1')
-			const player_info2 = interaction.getTextInputValue('player-info2')
-			const player_info3 = interaction.getTextInputValue('player-info3')
-			const player_info4 = interaction.getTextInputValue('player-info4')
-			const player_playtime = interaction.getTextInputValue('player-playtime')
-	    const channel = await client.channels.fetch("955176652466438184");
-			const embed = new client.discord.MessageEmbed()
-			.setTitle(`鷹中國際申請紀錄`)
-      .setDescription(`這份比單是由  ${interaction.member.user.tag}(${interaction.member.displayName})  送出\n審核人請一定要按按鈕，不然玩家會失去再次申請公職資格\n不通過也要自行通知`)
-			.addFields(
-				{ name: "玩家Discord名稱", value: "```" + player_info1 + "```", inline: false },
-	      { name: "玩家遊戲內名稱", value: "```" + player_info2 + "```", inline: false },
-				{ name: "玩家聯絡電話", value: "```" + player_info3 + "```", inline: false },
-				{ name: "玩家個人介紹", value: "```" + player_info4 + "```", inline: false },
-				{ name: "玩家上班時間", value: "```" + player_playtime + "```", inline: false },
-			)
-		  .setTimestamp()
-			.setColor(client.random_color())
-		  .setFooter({
-		    text: client.config.embedfooterText,
-		    iconURL: client.user.avatarURL(),
-		  });
-			channel.send({ embeds: [embed], components: [row], })
-			await  interaction.deferReply ( {  ephemeral : true  } ) 
-			interaction.followUp({ content: '⭕ ｜ 成功申請鷹中國際 ｜ 請等待後續通知!', ephemeral: true  })
+		// }	else if (interaction.customId === 'modal-dar-usedcar-form') {
+		// 	const player_info1 = interaction.getTextInputValue('player-info1')
+		// 	const player_info2 = interaction.getTextInputValue('player-info2')
+		// 	const player_info3 = interaction.getTextInputValue('player-info3')
+		// 	const player_info4 = interaction.getTextInputValue('player-info4')
+		// 	const player_playtime = interaction.getTextInputValue('player-playtime')
+	 //    const channel = await client.channels.fetch("955903143999336488");
+		// 	const embed = new client.discord.MessageEmbed()
+		// 	.setTitle(`鷹中國際申請紀錄`)
+  //     .setDescription(`這份比單是由  ${interaction.member.user.tag}(${interaction.member.displayName})  送出\n審核人請一定要按按鈕，不然玩家會失去再次申請公職資格\n不通過也要自行通知`)
+		// 	.addFields(
+		// 		{ name: "玩家Discord名稱", value: "```" + player_info1 + "```", inline: false },
+	 //      { name: "玩家遊戲內名稱", value: "```" + player_info2 + "```", inline: false },
+		// 		{ name: "玩家聯絡電話", value: "```" + player_info3 + "```", inline: false },
+		// 		{ name: "玩家個人介紹", value: "```" + player_info4 + "```", inline: false },
+		// 		{ name: "玩家上班時間", value: "```" + player_playtime + "```", inline: false },
+		// 	)
+		//   .setTimestamp()
+		// 	.setColor(client.random_color())
+		//   .setFooter({
+		//     text: client.config.embedfooterText,
+		//     iconURL: client.user.avatarURL(),
+		//   });
+		// 	channel.send({ embeds: [embed], components: [row], })
+		// 	await  interaction.deferReply ( {  ephemeral : true  } ) 
+		// 	interaction.followUp({ content: '⭕ ｜ 成功申請鷹中國際 ｜ 請等待後續通知!', ephemeral: true  })
 		} else if(interaction.customId === 'modal-dar-garage-form'){
 	    const player_info = interaction.getTextInputValue('player-info')
 			const player_playtime = interaction.getTextInputValue('player-playtime')

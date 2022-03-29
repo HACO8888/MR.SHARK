@@ -1,4 +1,3 @@
-
 module.exports = {
 	name: 'test',
 	usage: `sh!test`,
@@ -80,9 +79,10 @@ module.exports = {
 			.setLabel("申請鷹中國際二手車商")
 			.setEmoji("🚙")		
 			.setCustomId(`open-dar-usedcar-form`)
-			.setStyle("SECONDARY"),
+			.setStyle("SECONDARY")
+			.setDisabled(true),
 			new client.discord.MessageButton()
-			.setLabel("申請修車廠")
+			.setLabel("申請傳奇修車廠")
 			.setEmoji("🔩")		
 			.setCustomId(`open-dar-garage-form`)
 			.setStyle("SECONDARY"),
@@ -113,41 +113,69 @@ module.exports = {
 			.setCustomId(`open-report-form`)
 			.setStyle("SUCCESS")
 		);
-    
-    const select = new client.discord.MessageActionRow()
-		.addComponents(
-			new client.discord.MessageSelectMenu()
-			.setCustomId('select')
-			.setPlaceholder('你還沒選擇任何東西')
-			.addOptions([
-				{
-					label: '💼｜伺服器建議區',
-					description: '',
-					value: 'server',
-				},
-				{
-					label: '🚗｜車輛建議',
-					description: '',
-					value: 'car',
-				},
-				{
-					label: '🚗｜車輛引擎聲音建議',
-					description: '',
-					value: 'car_spund',
-				},
-				{
-					label: '🚗｜車輛數據價格建議',
-					description: '',
-					value: 'car_money',
-				},
-				{
-					label: '👕｜服裝建議',
-					description: '',
-					value: 'cloth',
-				},
-			]),
-		);
+    const row4 = new client.discord.MessageActionRow().addComponents(
+			new client.discord.MessageButton()
+			.setLabel("伺服器內容或劇情建議")
+			.setEmoji("💼")		
+			.setCustomId(`open-dar-server-suggest--form`)
+			.setStyle("SECONDARY"),
+			new client.discord.MessageButton()
+			.setLabel("服裝新增或移除建議")
+			.setEmoji("👕")		
+			.setCustomId(`open-dar-cloth-suggest-form`)
+			.setStyle("SECONDARY"),
+    );
+		const row5 = new client.discord.MessageActionRow().addComponents(
+			new client.discord.MessageButton()
+			.setLabel("車輛新增或移除建議")
+			.setEmoji("🚗")		
+			.setCustomId(`open-dar-car-suggest--form`)
+			.setStyle("SECONDARY"),
+			new client.discord.MessageButton()
+			.setLabel("車輛引擎聲音建議")
+			.setEmoji("🚗")		
+			.setCustomId(`open-dar-carsound-suggest-form`)
+			.setStyle("SECONDARY"),
+			new client.discord.MessageButton()
+			.setLabel("車輛數據價格建議")
+			.setEmoji("🚗")		
+			.setCustomId(`open-dar-carmoney-suggest-form`)
+			.setStyle("SECONDARY"),
+    );
+  //   const row4 = new client.discord.MessageActionRow()
+		// .addComponents(
+		// 	new client.discord.MessageSelectMenu()
+		// 	.setCustomId('select')
+		// 	.setPlaceholder('你還沒選擇任何東西')
+		// 	.addOptions([
+		// 		{
+		// 			label: '💼｜伺服器建議區',
+		// 			description: '',
+		// 			value: 'server',
+		// 		},
+		// 		{
+		// 			label: '🚗｜車輛建議',
+		// 			description: '',
+		// 			value: 'car',
+		// 		},
+		// 		{
+		// 			label: '🚗｜車輛引擎聲音建議',
+		// 			description: '',
+		// 			value: 'car_spund',
+		// 		},
+		// 		{
+		// 			label: '🚗｜車輛數據價格建議',
+		// 			description: '',
+		// 			value: 'car_money',
+		// 		},
+		// 		{
+		// 			label: '👕｜服裝建議',
+		// 			description: '',
+		// 			value: 'cloth',
+		// 		},
+		// 	]),
+		// );
 
-		message.channel.send({embeds:[Embed], components: [row, row2, row3],});
+		message.channel.send({embeds:[Embed2], components: [row4, row5, row3],});
 	}
 }
