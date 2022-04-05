@@ -35,6 +35,6 @@
     "uniqid": "^5.4.0"
   },
   "scripts": {
-    "run": "node index.js"
+    "run": "node shared.js"
   }
 }

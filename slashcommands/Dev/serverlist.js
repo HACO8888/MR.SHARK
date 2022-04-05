@@ -20,7 +20,7 @@ module.exports = {
       .setTitle("機器人伺服器列表")
       .setDescription(ServerList.map((data) => `${data}`).join("\n"))
       .setColor(client.random_color())
-      .setTimestamp(Date.now())
+      .setTimestamp()
       .setFooter({
         text: client.config.embedfooterText,
         iconURL: client.user.avatarURL(),

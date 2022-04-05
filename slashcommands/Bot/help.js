@@ -49,6 +49,20 @@ module.exports = {
         const name = `\`${filen.name}\``;
         InfoCommandsList.push(name);
       });
+			
+			const MoneyCommandsList = [];
+      readdirSync(`./slashcommands/Money`).forEach((file) => {
+        const filen = require(`../../slashcommands/Money/${file}`);
+        const name = `\`${filen.name}\``;
+        MoneyCommandsList.push(name);
+      });
+
+			const GameCommandsList = [];
+      readdirSync(`./slashcommands/Game`).forEach((file) => {
+        const filen = require(`../../slashcommands/Game/${file}`);
+        const name = `\`${filen.name}\``;
+        GameCommandsList.push(name);
+      });
 
       const ModCommandsList = [];
       readdirSync(`./slashcommands/Mod`).forEach((file) => {
@@ -72,8 +86,8 @@ module.exports = {
       });
 
 			const DevCommandsList = [];
-      readdirSync(`./commands/Dev`).forEach((file) => {
-        const filen = require(`../../commands/Dev/${file}`);
+      readdirSync(`./slashcommands/Dev`).forEach((file) => {
+        const filen = require(`../../slashcommands/Dev/${file}`);
         const name = `\`${filen.name}\``;
         DevCommandsList.push(name);
       });
@@ -96,6 +110,17 @@ module.exports = {
         .addField(
           "🔧管理",
           ModCommandsList.map((data) => `${data}`).join(", "),
+          false
+        )
+
+				.addField(
+          "🪙金流",
+          MoneyCommandsList.map((data) => `${data}`).join(", "),
+          false
+        )
+				.addField(
+          "👾遊戲",
+          GameCommandsList.map((data) => `${data}`).join(", "),
           false
         )
 
@@ -155,7 +180,7 @@ module.exports = {
           .setColor(client.random_color())
           .setFooter({
             text: client.config.embedfooterText,
-            icon_url: client.user.avatarURL(),
+            iconURL: client.user.avatarURL(),
           });
 
         interaction.reply({ embeds: [helpCmdEmbed] });

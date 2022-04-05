@@ -28,6 +28,7 @@ module.exports = {
 			// }
       const role = interaction.options.getRole("身分組");
       const user = interaction.options.getMember("人");
+			const member = interaction.guild.members.cache.get("949772996216750171")
 			if (interaction.guildId === "747765361302044732") {
 				if (!interaction.member.roles.cache.has("784667920642080799")) {
 					await interaction.reply({
@@ -40,9 +41,9 @@ module.exports = {
 					content: `❌ | 新增身分組失敗 | 您的權限不足，你沒有\`管理身分組\`的身分組`,
 				});
 				return;
-			} else if (!interaction.guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
+			} else if (!member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
 				await interaction.reply({
-					content: `❌ | 新增身分組失敗 | 機器人的權限不足`,
+					content: `❌ | 新增身分組失敗 | 機器人的權限不足，機器人沒有\`管理身分組\`的身分組`,
 				});
 				return;
 			}

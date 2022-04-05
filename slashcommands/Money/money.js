@@ -28,6 +28,7 @@ module.exports = {
 				item: [""],
 				marry: "NOPE",
 				premium: false,
+				job: "NOPE",
 			})
 			await NewuserDB.save();
 			userDB = await USERS.findOne({ userID: user.id });

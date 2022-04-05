@@ -23,16 +23,6 @@ module.exports = {
 		.slice(client.config.prefix.length)
 		.trim()
 		.split(" ");
-		
-		if (message.guild.id === "953644155140190279") {
-			
-			const command =
-	    client.民主進步黨指令.get(cmd.toLowerCase()) ||
-	    client.民主進步黨指令.find((c) => c.aliases?.includes(cmd.toLowerCase()));
-			if (!command) return message.reply("這指令不存在或是已經過期了");
-			await command.run(client, message, args);
-			
-		} else {
 			
 			const command =
 	    client.commands.get(cmd.toLowerCase()) ||
@@ -67,6 +57,5 @@ module.exports = {
 			const channel = guild.channels.cache.get("932928827976478741");
 			channel.send({ embeds: [embed] });
 		  await command.run(client, message, args);
-		}
 	}
 }

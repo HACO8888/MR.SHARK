@@ -6,7 +6,8 @@ const users = mongoose.Schema({
 	level: [Number],
 	item: [String],
 	marry: String,
-	premium: Boolean,
+	premium: String,
+	job: String,
 });
 
 module.exports = mongoose.model("users", users);

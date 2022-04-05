@@ -18,7 +18,7 @@ module.exports = {
 					}
 					userDB.jobyet = 'NOPE'
 					userDB.save()
-					interaction.reply('⭕ | 成功審核，你選擇了通過\n請注意此系統並不會通知玩家通過或不通過\n請務必一定要自行通知玩家是否通過\n```玩家名稱:' + member.user.tag + '(' + member.displayName + ')\n玩家ID:' + member.id + '```')
+					interaction.reply('⭕ | 成功審核，你選擇了通過\n請注意此系統並不會通知玩家通過或不通過\n請務必一定要自行通知玩家是否通過\n```審核人員:' + interaction.member.user.tag + '\n玩家名稱:' + member.user.tag + '(' + member.displayName + ')\n玩家ID:' + member.id + '```')
 				} else if(interaction.customId === `dar-delete-job-db-n-${member.id}`){
 					var userDB = await USERS.findOne({ userID: member.id });
 					if (!userDB) {
@@ -32,7 +32,7 @@ module.exports = {
 					}
 					userDB.jobyet = 'NOPE'
 					userDB.save()
-					interaction.reply('⭕ | 成功審核，你選擇了不通過\n請注意此系統並不會通知玩家通過或不通過\n請務必一定要自行通知玩家是否通過\n```玩家名稱:' + member.user.tag + '(' + member.displayName + ')\n玩家ID:' + member.id + '```')
+					interaction.reply('⭕ | 成功審核，你選擇了不通過\n請注意此系統並不會通知玩家通過或不通過\n請務必一定要自行通知玩家是否通過\n```審核人員:' + interaction.member.user.tag + '\n玩家名稱:' + member.user.tag + '(' + member.displayName + ')\n玩家ID:' + member.id + '```')
 				} 
 			})
 		}

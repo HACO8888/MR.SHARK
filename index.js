@@ -24,7 +24,8 @@ const client = new Client({
     Intents.FLAGS.DIRECT_MESSAGE_TYPING,
   ],
 	partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
-	allowedMentions: { parse: ["roles", "users"], repliedUser: false },
+	allowedMentions: { parse: ["roles", "users"], 
+	repliedUser: false },
 });
 
 module.exports = client;
@@ -36,7 +37,6 @@ client.say = Embeds;
 client.discord = Discord;
 client.commands = new Collection();
 client.slashCommands = new Collection();
-client.民主進步黨指令 = new Collection();
 client.players = new Discord.Collection();
 client.config = require("./config.json");
 client.discordTogether = new DiscordTogether(client);
@@ -63,9 +63,9 @@ client.random_color = function random_color() {
 
 process.on("uncaughtException", console.log)
 process.on("unhandledRejection", console.log)
-					 
+
 require("./handler/NormalHandler")(client);
 require("./handler/EventHandler")(client);
 require("./handler/CommandHandler")(client);
 
-client.login(process.env['TOKEN']);
+client.login(process.env['TOKEN']) ;

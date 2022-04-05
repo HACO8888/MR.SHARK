@@ -4,7 +4,7 @@
 # 2) replace npm run-script run in run.nix with your command
 
 run = "nix-shell build.nix"
-entrypoint = "index.js"
+entrypoint = "shared.js"
 
 language = "nodejs"
 

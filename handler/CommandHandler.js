@@ -21,21 +21,6 @@ module.exports = async function loadCommands(client) {
     }
   });
 
-	const commandFiles2 = await globPromise(`${process.cwd()}/民主進步黨指令/*.js`);
-
-	client.logger.info("COMMANDS", `Loading ${commandFiles2.length} 民主進步黨指令...`)
-	
-  commandFiles2.map((value) => {
-    const file = require(value);
-    const splitted = value.split("/");
-    const directory = splitted[splitted.length - 2];
-
-    if (file.name) {
-      const properties = { directory, ...file };
-			client.logger.debug(`CMD DEBUG`, `Loaded 民主進步黨指令-${file.name}.js`);
-      client.民主進步黨指令.set(file.name, properties);
-    }
-  });
 	
   const commandFiles = glob.sync("./slashcommands/**/*.js");
 
