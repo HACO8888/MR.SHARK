@@ -38,7 +38,7 @@ module.exports = {
 			}
 			if (interaction.customId === `wood_pickaxe_${member.id}`) {
 				const Embed = new client.discord.MessageEmbed()
-				.setTitle("<a:Mining:960906028382298183>挖掘中請稍後...")
+				.setTitle("<a:Mining:960906028382298183> 挖掘中請稍後...")
 				.setColor(client.random_color())
 				interaction.update({embeds: [Embed], components: [], ephemeral: true})
 				setTimeout(function(){ 
@@ -63,7 +63,9 @@ module.exports = {
 					}
 					mineDB.save();
 					const Embed2 = new client.discord.MessageEmbed()
-					.setTitle(`挖掘成功\n挖掘到了\n木頭:\`${wood.toString()}\`個\n石頭:\`${stone.toString()}\`個`)
+					.setTitle(`🥳 恭喜${interaction.user.tag}挖礦成功`)
+					.setDescription(`以下是您挖到的礦物喔！您可以使用背包按鈕查看所有物品！`)
+					.addFields({name: "木頭", value: `${wood.toString()}個`, inline:true}, {name: "石頭", value: `${stone.toString()}個`, inline:true})
 					.setColor(client.random_color())
 					.setTimestamp()
 					.setFooter({
@@ -82,7 +84,7 @@ module.exports = {
 				}, 10000);			
 			} else if (interaction.customId === `stone_pickaxe_${member.id}`) {
 					const Embed2 = new client.discord.MessageEmbed()
-					.setTitle(`❌ | 開發中...`)
+					.setTitle(`❌ | 開發中，如果您已經有這稿子表示您已經到遊戲盡頭了喔！`)
 					.setColor(client.random_color())
 				return interaction.editReply({embeds: [Embed2], components: [row]})
 			}
