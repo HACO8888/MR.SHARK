@@ -6,9 +6,6 @@ module.exports = {
   category: "職業",
   description: "礦工工作指令",
   run: async (client, interaction) => {
-		if(interaction.member.id !== '508964901415550976' && interaction.member.id !== '536445172247167016' && interaction.channel.id !== "950048724132974652") {
-			return interaction.reply("❌開發中...")
-		} 
 		var Stone = false;
 		var Stone_L = "已解鎖";
 		var Iron = false;
@@ -61,7 +58,7 @@ module.exports = {
 			await NewmineDB.save();
 			mineDB = await MINE.findOne({ userID: user.id });
 		}
-		if (userDB.job === "NOPE") {
+		if (userDB.job === "NOPE" || userDB.job !== "miner") {
 			const Embed = new client.discord.MessageEmbed()
       .setTitle("❌ | 你不是礦工所以不能使用這個指令")
       .setColor(client.random_color())

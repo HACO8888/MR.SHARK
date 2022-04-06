@@ -6,9 +6,6 @@ module.exports = {
   category: "職業",
   description: "查看背包的指令",
   run: async (client, interaction) => {
-		if(interaction.member.id !== '508964901415550976' && interaction.member.id !== '536445172247167016' && interaction.channel.id !== "950048724132974652") {
-			return interaction.reply("❌開發中...")
-		} 
 		const user = interaction.user
 		var userDB = await USERS.findOne({ userID: user.id });
 		if (!userDB) {

@@ -89,7 +89,7 @@ module.exports = {
 		.addField(`用戶狀態`,`${status}`, true)
 		.addField(`身分組`, memberroles.join(" "), true)    
 		.addField(`權限`, p.join(" "), true)       
-		.addField(`用戶創建帳號時間`,`<t:${user.createdAt}>`, true)
+		.addField(`用戶創建帳號時間`,`<t:${user.createdTimestamp}>`, true)
 		.setTimestamp()
 		.setColor(client.random_color())
 		.setFooter({

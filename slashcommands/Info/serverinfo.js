@@ -36,7 +36,7 @@ module.exports = {
 			.addField("身分組數", `${interaction.guild.roles.cache.size}`,true)
 			.addField(`伺服器人數狀態 - ${interaction.guild.memberCount}`, `<:Online:746672406411870331>上線 - ${interaction.guild.members.cache.filter(member => member.presence?.status === 'online').size}\n<:Idle:746672449353154650>閒置 - ${interaction.guild.members.cache.filter(member => member.presence?.status === 'idle').size}\n<:Dnd:746672747287019610>請勿打擾 - ${interaction.guild.members.cache.filter(member => member.presence?.status === 'dnd').size}\n<:Offline:746672917584281630>離線/隱形 - ${interaction.guild.members.cache.filter(member => !member.presence || member.presence.status === 'offline').size}`, true)
 			.addField(`頻道總數 - ${interaction.guild.channels.cache.size}`, `📚類別 - ${interaction.guild.channels.cache.filter(c => c.type === "GUILD_CATEGORY").size}\n📄文字頻道 - ${interaction.guild.channels.cache.filter(c => c.type === "GUILD_TEXT").size}\n🔊語音頻道 - ${interaction.guild.channels.cache.filter(c => c.type === "GUILD_VOICE").size}\n📢公告頻道 - ${interaction.guild.channels.cache.filter(c => c.type === "GUILD_NEWS").size}\n🛒商店頻道 - ${interaction.guild.channels.cache.filter(c => c.type === "GUILD_STORE").size}`, true)
-			.addField("伺服器創建時間", `${ctime}`, true)
+			.addField("伺服器創建時間", `${interaction.guild.createdTimestamp}`, true)
 			.setTimestamp()
 			.setColor(client.random_color())
 			.setFooter({

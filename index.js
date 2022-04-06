@@ -23,7 +23,7 @@ const client = new Client({
     Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
     Intents.FLAGS.DIRECT_MESSAGE_TYPING,
   ],
-	partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+	partials: ['MESSAGE', 'CHANNEL', 'REACTION', "USER"],
 	allowedMentions: { parse: ["roles", "users"], 
 	repliedUser: false },
 });
@@ -68,4 +68,4 @@ require("./handler/NormalHandler")(client);
 require("./handler/EventHandler")(client);
 require("./handler/CommandHandler")(client);
 
-client.login(process.env['TOKEN']) ;
+client.login(process.env['TOKEN']);
