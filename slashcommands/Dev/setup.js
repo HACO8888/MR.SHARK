@@ -1,5 +1,5 @@
 const USERS = require(`${process.cwd()}/models/users`)
-
+const LOG = require(`${process.cwd()}/models/moneylog`)
 module.exports = {
     name: 'setup',
     usage: `/setup`,
@@ -75,7 +75,7 @@ module.exports = {
 			}
 		],
   	run: async (client, interaction) => {
-    if(interaction.member.id !== '536445172247167016' && interaction.member.id !== '508964901415550976'&& interaction.member.id !== '450140542291148803') return interaction.reply('❌你不是開發人員');
+    if(interaction.member.id !== '536445172247167016' && interaction.member.id !== '508964901415550976'&& interaction.member.id !== '450140542291148803') return interaction.reply('❌你不是機器人管理者');
 
 		const user = interaction.options.getUser('用戶') || interaction.user
 		var userDB = await USERS.findOne({ userID: user.id });
@@ -87,9 +87,19 @@ module.exports = {
 				item: [""],
 				marry: "NOPE",
 				premium: false,
+				job: "NOPE",
 			})
 			await NewuserDB.save();
 			userDB = await USERS.findOne({ userID: user.id });
+		}
+		var logDB = await LOG.findOne({ userID: user.id });
+		if (!logDB) {
+			const NewlogDB = new LOG({
+				userID: user.id,
+				log: [],
+			})
+			await NewlogDB.save();
+			logDB = await LOG.findOne({ userID: user.id });
 		}
 
 		const embed = new client.discord.MessageEmbed()
@@ -111,7 +121,10 @@ module.exports = {
 			userDB.save();
 			embed.setTitle(`金錢系統`)
 			embed.setDescription(`成功將${user.tag}的金錢 設定成\`${num}\`元`)
+			logDB.log.push({ before: old_num, after: num, reason: "管理者", user: false, userid: "systemset", time: Math.floor(Date.now() / 1000) })
+			logDB.save();
 		} else if (interaction.options.getString('細項') == "addmoney")	{
+			let old_num = userDB.Money[0];
 			if (!interaction.options.getString('數字')) {
 				embed.setTitle(`金錢系統`)
 				embed.setDescription(`請輸入需要增加多少金錢`)
@@ -124,8 +137,10 @@ module.exports = {
 			userDB.save();
 			embed.setTitle(`金錢系統`)
 			embed.setDescription(`成功將${user.tag}的金錢 增加了\`${parseInt(interaction.options.getString('數字'))}\`元 現在他有\`${num}\`元`)
-			let now = new Date()
+			logDB.log.push({ before: old_num, after: num, reason: "管理者給你", user: false, userid: "systemadd", time: Math.floor(Date.now() / 1000) })
+			logDB.save();
 		} else if (interaction.options.getString('細項') == "removemoney")	{
+			let old_num = userDB.Money[0];
 			if (!interaction.options.getString('數字')) {
 				embed.setTitle(`金錢系統`)
 				embed.setDescription(`請輸入需要扣除多少金錢`)
@@ -139,12 +154,16 @@ module.exports = {
 			userDB.save();
 			embed.setTitle(`金錢系統`)
 			embed.setDescription(`成功將${user.tag}的金錢 扣除了\`${parseInt(interaction.options.getString('數字'))}\`元 現在他還有\`${num}\`元`)
-			
+			logDB.log.push({ before: old_num, after: num, reason: "管理者拿走你", user: false, userid: "systemremove", time: Math.floor(Date.now() / 1000) })
+			logDB.save();
 		} else if (interaction.options.getString('細項') == "resetmoney")	{
+			let old_num = userDB.Money[0];
 			userDB.Money[0] = 0;
 			userDB.save();
 			embed.setTitle(`金錢系統`)
 			embed.setDescription(`成功將${user.tag}的金錢 重新設定為\`0\`元`)
+			logDB.log.push({ before: old_num, after: 0, reason: "管理者", user: false, userid: "systemreset", time: Math.floor(Date.now() / 1000) })
+			logDB.save();
 		} else if (interaction.options.getString('細項') == "setjob")	{
 			if (!interaction.options.getString('職業')) {
 				embed.setTitle(`職業系統`)

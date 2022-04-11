@@ -13,6 +13,7 @@ module.exports = {
   ],
   category: "一般",
   description: "幫助你聊解指令的指令!",
+	
   run: async (client, interaction) => {
     const row = new client.discord.MessageActionRow().addComponents(
       new client.discord.MessageButton()
@@ -71,6 +72,13 @@ module.exports = {
         ModCommandsList.push(name);
       });
 
+			const JobCommandsList = [];
+      readdirSync(`./slashcommands/Job`).forEach((file) => {
+        const filen = require(`../../slashcommands/Job/${file}`);
+        const name = `\`${filen.name}\``;
+        JobCommandsList.push(name);
+      });
+
       const MCCommandsList = [];
       readdirSync(`./slashcommands/MC`).forEach((file) => {
         const filen = require(`../../slashcommands/MC/${file}`);
@@ -112,7 +120,11 @@ module.exports = {
           ModCommandsList.map((data) => `${data}`).join(", "),
           false
         )
-
+				.addField(
+          "💼工作",
+          JobCommandsList.map((data) => `${data}`).join(", "),
+          false
+        )
 				.addField(
           "🪙金流",
           MoneyCommandsList.map((data) => `${data}`).join(", "),

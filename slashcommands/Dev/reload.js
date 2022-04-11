@@ -84,6 +84,6 @@ module.exports = {
         text: client.config.embedfooterText,
         iconURL: client.user.avatarURL(),
       });
-    return interaction.reply({ embeds:[Embed]});
+    return interaction.reply({ embeds:[Embed], ephemeral: true});
   },
 };

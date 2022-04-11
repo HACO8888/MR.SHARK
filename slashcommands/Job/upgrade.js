@@ -6,9 +6,8 @@ module.exports = {
   category: "職業",
   description: "所有職業升級指令",
   run: async (client, interaction) => {
-		if(interaction.member.id !== '508964901415550976' && interaction.member.id !== '536445172247167016') {
-			return interaction.reply("❌開發中...")
-		} 
+		const user = interaction.user
+		var userDB = await USERS.findOne({ userID: user.id });
 		if (!userDB) {
 			const NewuserDB = new USERS({
 				userID: user.id,
@@ -55,7 +54,27 @@ module.exports = {
 			.setColor(client.random_color())
 			return interaction.reply({ embeds: [Embed]});
 		} else if (userDB.job === "miner") {
-			return
+			var count = 0;
+			const row = new client.discord.MessageActionRow()
+			if (mineDB.Stone_Pickaxe === false) {
+				count += 1;
+				row.addComponents(
+					new client.discord.MessageButton()
+					.setLabel("石鎬")
+					.setEmoji("<:Stone_Pickaxe:955461858683416636>")			
+					.setCustomId(`make_stone_pickaxe_${interaction.member.id}`)
+					.setStyle("SUCCESS")
+				)
+			}
+			const Embed = new client.discord.MessageEmbed()
+			.setTitle(`⚒️ ${interaction.user.tag}歡迎來到超級科技化的合成台`)
+			.setDescription(`請選擇您要合成的高科技物品！您可以合成${count.toString()}項東西！`)
+			.setColor(client.random_color())
+			if (count === 0) {
+				interaction.reply({embeds: [Embed], components: [], ephemeral: false})
+			} else {
+				interaction.reply({embeds: [Embed], components: [row], ephemeral: false})
+			}
 		}
 	}
 }

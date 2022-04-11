@@ -46,16 +46,16 @@ module.exports = {
 					var get_stone = Math.floor(Math.random()*100) + 1;
 					var wood;
 					var stone;
-					if (get_wood <= 30) { //30%會獲的2個木頭
-						wood = 2
+					if (get_wood <= 30) { //30%會獲的3個木頭
+						wood = 3
 						mineDB.Wood += wood;
-					} else if (get_wood > 30 && get_wood <= 80) { //50%會獲的1個木頭
-						wood = 1
+					} else if (get_wood > 30 && get_wood <= 80) { //50%會獲的2個木頭
+						wood = 2
 						mineDB.Wood += wood; 
-					} else { //20%會獲的0個木頭
-						wood = 0
+					} else { //20%會獲的1個木頭
+						wood = 1
 					}
-					if (get_stone <= 30 ){ //30%會獲的1個木頭
+					if (get_stone <= 40 ){ //40%會獲的1個木頭
 						stone = 1
 						mineDB.Cobblestone += stone;
 					} else { //70%會獲的0個木頭
@@ -81,12 +81,13 @@ module.exports = {
 						.setDisabled(false),
 					)
 					interaction.editReply({embeds: [Embed2], components: [row]})
-				}, 10000);			
+				}, 10000);
+				return;
 			} else if (interaction.customId === `stone_pickaxe_${member.id}`) {
 					const Embed2 = new client.discord.MessageEmbed()
 					.setTitle(`❌ | 開發中，如果您已經有這稿子表示您已經到遊戲盡頭了喔！`)
 					.setColor(client.random_color())
-				return interaction.editReply({embeds: [Embed2], components: [row]})
+				return interaction.update({embeds: [Embed2], components: []})
 			}
 		}
 	} 

@@ -2,7 +2,7 @@ const { DiscordTogether } = require('discord-together');
 module.exports = {
 	name: 'youtube',
 	usage: `sh!youtube`,
-	category: "開發",
+	category: "一般",
 	description: '開啟Discord Playtogether功能',
 	run: async (client, message, args) => {
 		if(message.member.voice.channel) {

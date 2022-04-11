@@ -23,7 +23,7 @@ module.exports = async function (client) {
 
 	passport.use(new Strategy({
     clientID: "949772996216750171",
-    clientSecret: "1Zg56GDk_J0-gXR2ZmAHeUXCg_PA3LEN",
+    clientSecret: process.env['SECRET'],
     callbackURL: `https://shark.haco.tw/callback`,
     scope: ["identify", "email", "connections", "guilds", "guilds.join"]
   },

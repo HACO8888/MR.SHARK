@@ -49,7 +49,7 @@ module.exports = {
 			mineDB = await MINE.findOne({ userID: user.id });
 		}
 		const Embed = new client.discord.MessageEmbed()
-		.setTitle(`${user.tag}的背包`)
+		.setAuthor(`${user.username} 的背包`, interaction.member.displayAvatarURL({ dynamic: true }))
 		.setColor(client.random_color())
 		.setTimestamp()
 		.setFooter({
