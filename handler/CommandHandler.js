@@ -33,18 +33,6 @@ module.exports = async function loadCommands(client) {
       client.logger.error(`error`, `Name is required for slashCommands! (${file})`);
     }
 
-    // const data = {
-    //   name: command.name,
-    //   description: command?.description ?? "這個指令被遺忘了，沒有介紹內容QQ",
-    //   options: command?.options ?? []
-    // };
-
-    // const cmd = client.application?.commands.cache.find((c) => c.name === command.name);
-    // if (!cmd) {
-    //   await client.application?.commands.create(data);
-    // }
-
-
     client.logger.debug(`CMD DEBUG`, `Loaded ${command.name}.js`);
 
     delete require.cache[require.resolve(`../${file}`)];

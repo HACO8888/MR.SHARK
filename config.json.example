@@ -1,0 +1,11 @@
+{
+	"prefix": "",
+	"botID": "",
+	"embedfooterText": "",
+	"LogGuildId": "",
+	"CommandLogChannelId": "",
+	"ErrorLogChannelId": "",
+	"ReportLogChannelId": "",
+	"GuildLogChannelId": "",
+	"ReportFormLogChannelId": ""
+}
